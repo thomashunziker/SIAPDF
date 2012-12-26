@@ -215,7 +215,7 @@ class PdfStamperImp extends PdfWriter {
 		int skipInfo = -1;
 		PRIndirectReference iInfo = (PRIndirectReference) reader.getTrailer().get(PdfName.INFO);
 		PdfDictionary oldInfo = (PdfDictionary) PdfReader.getPdfObject(iInfo);
-		String producer = "doaster.com";
+		String producer = Document.DEFAULT_PRODUCER_NAME;
 		if (iInfo != null)
 			skipInfo = iInfo.getNumber();
 		if (oldInfo != null && oldInfo.get(PdfName.PRODUCER) != null)
