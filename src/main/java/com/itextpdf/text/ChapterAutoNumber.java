@@ -48,78 +48,86 @@
 package com.itextpdf.text;
 
 import com.itextpdf.text.error_messages.MessageLocalization;
+
 /**
  * Chapter with auto numbering.
- *
+ * 
  * @author Michael Niedermair
  */
 public class ChapterAutoNumber extends Chapter {
 
-    // constant
-    private static final long serialVersionUID = -9217457637987854167L;
+	// constant
+	private static final long serialVersionUID = -9217457637987854167L;
 
-    /**
-     * Is the chapter number already set?
-     * @since	2.1.4
-     */
-    protected boolean numberSet = false;
-    
-    /**
-     * Create a new object.
-     *
-     * @param para     the Chapter title (as a <CODE>Paragraph</CODE>)
-     */
-    public ChapterAutoNumber(final Paragraph para) {
-        super(para, 0);
-    }
+	/**
+	 * Is the chapter number already set?
+	 * 
+	 * @since 2.1.4
+	 */
+	protected boolean numberSet = false;
 
-    /**
-     * Create a new object.
-     * 
-     * @param title	    the Chapter title (as a <CODE>String</CODE>)
-     */
-    public ChapterAutoNumber(final String title) {
-        super(title, 0);
-    }
+	/**
+	 * Create a new object.
+	 * 
+	 * @param para
+	 *            the Chapter title (as a <CODE>Paragraph</CODE>)
+	 */
+	public ChapterAutoNumber(final Paragraph para) {
+		super(para, 0);
+	}
 
-    /**
-     * Create a new section for this chapter and ad it.
-     *
-     * @param title  the Section title (as a <CODE>String</CODE>)
-     * @return Returns the new section.
-     */
-    public Section addSection(final String title) {
-    	if (isAddedCompletely()) {
-    		throw new IllegalStateException(MessageLocalization.getComposedMessage("this.largeelement.has.already.been.added.to.the.document"));
-    	}
-        return addSection(title, 2);
-    }
+	/**
+	 * Create a new object.
+	 * 
+	 * @param title
+	 *            the Chapter title (as a <CODE>String</CODE>)
+	 */
+	public ChapterAutoNumber(final String title) {
+		super(title, 0);
+	}
 
-    /**
-     * Create a new section for this chapter and add it.
-     *
-     * @param title  the Section title (as a <CODE>Paragraph</CODE>)
-     * @return Returns the new section.
-     */
-    public Section addSection(final Paragraph title) {
-    	if (isAddedCompletely()) {
-    		throw new IllegalStateException(MessageLocalization.getComposedMessage("this.largeelement.has.already.been.added.to.the.document"));
-    	}
-        return addSection(title, 2);
-    }
-    
-    /**
-     * Changes the Chapter number.
-     * @param	number	the new chapter number
-     * @since 2.1.4
-     */
-    public int setAutomaticNumber(int number) {
-    	if (!numberSet) {
-        	number++;
-        	super.setChapterNumber(number);
-        	numberSet = true;
-    	}
+	/**
+	 * Create a new section for this chapter and ad it.
+	 * 
+	 * @param title
+	 *            the Section title (as a <CODE>String</CODE>)
+	 * @return Returns the new section.
+	 */
+	public Section addSection(final String title) {
+		if (isAddedCompletely()) {
+			throw new IllegalStateException(MessageLocalization.getComposedMessage("this.largeelement.has.already.been.added.to.the.document"));
+		}
+		return addSection(title, 2);
+	}
+
+	/**
+	 * Create a new section for this chapter and add it.
+	 * 
+	 * @param title
+	 *            the Section title (as a <CODE>Paragraph</CODE>)
+	 * @return Returns the new section.
+	 */
+	public Section addSection(final Paragraph title) {
+		if (isAddedCompletely()) {
+			throw new IllegalStateException(MessageLocalization.getComposedMessage("this.largeelement.has.already.been.added.to.the.document"));
+		}
+		return addSection(title, 2);
+	}
+
+	/**
+	 * Changes the Chapter number.
+	 * 
+	 * @param number
+	 *            the new chapter number
+	 * @since 2.1.4
+	 */
+	public int setAutomaticNumber(int number) {
+		if (!numberSet) {
+			number++;
+			super.setChapterNumber(number);
+			numberSet = true;
+		}
 		return number;
-    }
+	}
 
 }

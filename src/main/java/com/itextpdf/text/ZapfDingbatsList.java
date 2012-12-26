@@ -64,7 +64,8 @@ public class ZapfDingbatsList extends List {
 	/**
 	 * Creates a ZapfDingbatsList
 	 * 
-	 * @param zn a char-number
+	 * @param zn
+	 *            a char-number
 	 */
 	public ZapfDingbatsList(int zn) {
 		super(true);
@@ -77,8 +78,10 @@ public class ZapfDingbatsList extends List {
 	/**
 	 * Creates a ZapfDingbatsList
 	 * 
-	 * @param zn a char-number
-	 * @param symbolIndent	indent
+	 * @param zn
+	 *            a char-number
+	 * @param symbolIndent
+	 *            indent
 	 */
 	public ZapfDingbatsList(int zn, int symbolIndent) {
 		super(true, symbolIndent);
@@ -89,8 +92,10 @@ public class ZapfDingbatsList extends List {
 	}
 
 	/**
-	 * set the char-number 
-	 * @param zn a char-number
+	 * set the char-number
+	 * 
+	 * @param zn
+	 *            a char-number
 	 */
 	public void setCharNumber(int zn) {
 		this.zn = zn;
@@ -98,8 +103,8 @@ public class ZapfDingbatsList extends List {
 
 	/**
 	 * get the char-number
-	 *
-	 * @return	char-number
+	 * 
+	 * @return char-number
 	 */
 	public int getCharNumber() {
 		return zn;
@@ -107,15 +112,16 @@ public class ZapfDingbatsList extends List {
 
 	/**
 	 * Adds an <CODE>Object</CODE> to the <CODE>List</CODE>.
-	 *
-	 * @param	o	the object to add.
+	 * 
+	 * @param o
+	 *            the object to add.
 	 * @return true if adding the object succeeded
 	 */
 	public boolean add(Object o) {
 		if (o instanceof ListItem) {
 			ListItem item = (ListItem) o;
 			Chunk chunk = new Chunk(preSymbol, symbol.getFont());
-			chunk.append(String.valueOf((char)zn));
+			chunk.append(String.valueOf((char) zn));
 			chunk.append(postSymbol);
 			item.setListSymbol(chunk);
 			item.setIndentationLeft(symbolIndent, autoindent);

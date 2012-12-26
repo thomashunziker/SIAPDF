@@ -218,8 +218,9 @@ public class HtmlTagMap extends HashMap {
 		put(peer.getAlias(), peer);
 
 		peer = new HtmlPeer(ElementTags.IMAGE, HtmlTags.IMAGE);
-		//        peer.addAlias(ElementTags.URL, HtmlTags.URL);
-		peer.addAlias(ElementTags.URL, ElementTags.SRC); // contributed by Lubos Strapko
+		// peer.addAlias(ElementTags.URL, HtmlTags.URL);
+		peer.addAlias(ElementTags.URL, ElementTags.SRC); // contributed by Lubos
+															// Strapko
 
 		peer.addAlias(ElementTags.ALT, HtmlTags.ALT);
 		peer.addAlias(ElementTags.PLAINWIDTH, HtmlTags.PLAINWIDTH);
@@ -232,7 +233,9 @@ public class HtmlTagMap extends HashMap {
 
 	/**
 	 * Checks if this is the root tag.
-	 * @param tag a tagvalue
+	 * 
+	 * @param tag
+	 *            a tagvalue
 	 * @return true if tag is HTML or html
 	 */
 
@@ -242,7 +245,9 @@ public class HtmlTagMap extends HashMap {
 
 	/**
 	 * Checks if this is the head tag.
-	 * @param tag a tagvalue
+	 * 
+	 * @param tag
+	 *            a tagvalue
 	 * @return true if tag is HEAD or head
 	 */
 
@@ -252,7 +257,9 @@ public class HtmlTagMap extends HashMap {
 
 	/**
 	 * Checks if this is the meta tag.
-	 * @param tag a tagvalue
+	 * 
+	 * @param tag
+	 *            a tagvalue
 	 * @return true if tag is META or meta
 	 */
 
@@ -262,7 +269,9 @@ public class HtmlTagMap extends HashMap {
 
 	/**
 	 * Checks if this is the link tag.
-	 * @param tag a tagvalue
+	 * 
+	 * @param tag
+	 *            a tagvalue
 	 * @return true if tag is LINK or link
 	 */
 
@@ -272,7 +281,9 @@ public class HtmlTagMap extends HashMap {
 
 	/**
 	 * Checks if this is the title tag.
-	 * @param tag a tagvalue
+	 * 
+	 * @param tag
+	 *            a tagvalue
 	 * @return true if tag is TITLE or title
 	 */
 
@@ -282,7 +293,9 @@ public class HtmlTagMap extends HashMap {
 
 	/**
 	 * Checks if this is the root tag.
-	 * @param tag a tagvalue
+	 * 
+	 * @param tag
+	 *            a tagvalue
 	 * @return true if tag is BODY or body
 	 */
 
@@ -292,11 +305,13 @@ public class HtmlTagMap extends HashMap {
 
 	/**
 	 * Checks if this is a special tag.
-	 * @param tag a tagvalue
-	 * @return true if tag is a HTML, HEAD, META, LINK or BODY tag (case insensitive)
+	 * 
+	 * @param tag
+	 *            a tagvalue
+	 * @return true if tag is a HTML, HEAD, META, LINK or BODY tag (case
+	 *         insensitive)
 	 */
 	public static boolean isSpecialTag(String tag) {
-		return isHtml(tag) || isHead(tag) || isMeta(tag) || isLink(tag)
-				|| isBody(tag);
+		return isHtml(tag) || isHead(tag) || isMeta(tag) || isLink(tag) || isBody(tag);
 	}
 }

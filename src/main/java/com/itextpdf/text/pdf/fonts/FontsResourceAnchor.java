@@ -48,15 +48,15 @@ package com.itextpdf.text.pdf.fonts;
 
 /**
  * A class to facilitate the loading of resources
- *
+ * 
  * @author Paulo Soares (psoares@consiste.pt)
  */
 public class FontsResourceAnchor {
-    
-    /**
-     * Creates a FontsResourceAnchor
-     */
-    public FontsResourceAnchor() {
-    }
-    
+
+	/**
+	 * Creates a FontsResourceAnchor
+	 */
+	public FontsResourceAnchor() {
+	}
+
 }

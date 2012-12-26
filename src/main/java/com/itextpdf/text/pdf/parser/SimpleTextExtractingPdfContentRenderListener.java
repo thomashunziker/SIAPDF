@@ -46,114 +46,164 @@
  */
 package com.itextpdf.text.pdf.parser;
 
-
 /**
  * A simple text extraction renderer.
  * 
- * This renderer keeps track of the current Y position of each string.  If it detects
- * that the y position has changed, it inserts a line break into the output.  If the
- * PDF renders text in a non-top-to-bottom fashion, this will result in the text not
- * being a true representation of how it appears in the PDF.
+ * This renderer keeps track of the current Y position of each string. If it
+ * detects that the y position has changed, it inserts a line break into the
+ * output. If the PDF renders text in a non-top-to-bottom fashion, this will
+ * result in the text not being a true representation of how it appears in the
+ * PDF.
  * 
- * This renderer also uses a simple strategy based on the font metrics to determine if
- * a blank space should be inserted into the output.
+ * This renderer also uses a simple strategy based on the font metrics to
+ * determine if a blank space should be inserted into the output.
  * 
- * @since	2.1.5
+ * @since 2.1.5
  */
 public class SimpleTextExtractingPdfContentRenderListener implements TextProvidingRenderListener {
 
-    /** keeps track of the Y position of the last rendered text */
-    private float lastYPos;
-    /** keeps track of the X position of the end of the last rendered text */
-    private float lastEndingXPos;
+	/** keeps track of the Y position of the last rendered text */
+	private float lastYPos;
+	/** keeps track of the X position of the end of the last rendered text */
+	private float lastEndingXPos;
 
-    private Matrix lastTextLineMatrix;
-    
-    
-    private Vector lastStart;
-    private Vector lastEnd;
-    
-    /** used to store the resulting String. */
-    private StringBuffer result;
+	private Matrix lastTextLineMatrix;
 
-    /**
-     * Creates a new text extraction renderer.
-     */
-    public SimpleTextExtractingPdfContentRenderListener() {
-        reset();
-    }
+	private Vector lastStart;
+	private Vector lastEnd;
 
-    public void reset() {
-        lastYPos = 0f;
-        lastEndingXPos = 0f;
-        lastTextLineMatrix = null;
-        result = new StringBuffer();
-    }
-    
-    /**
-     * Returns the result so far.
-     * @return	a String with the resulting text.
-     */
-    public String getResultantText(){
-        return result.toString();
-    }
-    /**
-     * Writes text to the result.
-     * @param text  The text that needs to be displayed
-     * @param gs    The current graphics state, including the current font and various spacings needed to compute glyph widths
-     * @param renderInto The rectangle that the result will be rendered into
-     * @param spaceWidth The scaled width of a space character in the current font
-     * @see com.itextpdf.text.pdf.parser.RenderListener#renderText(String, GraphicsState, Rectangle)
-     */
+	/** used to store the resulting String. */
+	private StringBuffer result;
 
-    /**
-     * Captures text using a simplified algorithm for inserting hard returns and spaces
-     * @see com.itextpdf.text.pdf.parser.AbstractRenderListener#renderText(java.lang.String, com.itextpdf.text.pdf.parser.GraphicsState, com.itextpdf.text.pdf.parser.Matrix, com.itextpdf.text.pdf.parser.Matrix)
-     */
-    public void renderText(TextRenderInfo renderInfo) {
-        boolean firstRender = result.length() == 0;
-        boolean hardReturn = false;
+	/**
+	 * Creates a new text extraction renderer.
+	 */
+	public SimpleTextExtractingPdfContentRenderListener() {
+		reset();
+	}
 
-        Vector start = renderInfo.getStartPoint();
-        Vector end = renderInfo.getEndPoint();
-        
-        if (!firstRender){
-            Vector x0 = start;
-            Vector x1 = lastStart;
-            Vector x2 = lastEnd;
-            
-            // see http://mathworld.wolfram.com/Point-LineDistance2-Dimensional.html
-            float dist = (x2.subtract(x1)).cross((x1.subtract(x0))).lengthSquared() / x2.subtract(x1).lengthSquared();
+	public void reset() {
+		lastYPos = 0f;
+		lastEndingXPos = 0f;
+		lastTextLineMatrix = null;
+		result = new StringBuffer();
+	}
 
-            float sameLineThreshold = 1f; // we should probably base this on the current font metrics, but 1 pt seems to be sufficient for the time being
-            if (dist > sameLineThreshold)
-                hardReturn = true;
-            
-            // Note:  Technically, we should check both the start and end positions, in case the angle of the text changed without any displacement
-            // but this sort of thing probably doesn't happen much in reality, so we'll leave it alone for now
-        }
-        
-        if (hardReturn){
-            //System.out.println("<< Hard Return >>");
-            result.append('\n');
-        } else if (!firstRender){ 
-            if (result.charAt(result.length()-1) != ' ' && renderInfo.getText().charAt(0) != ' '){ // we only insert a blank space if the trailing character of the previous string wasn't a space, and the leading character of the current string isn't a space
-                float spacing = lastEnd.subtract(start).length();
-                if (spacing > renderInfo.getSingleSpaceWidth()/2f){
-                    result.append(' ');
-                    //System.out.println("Inserting implied space before '" + renderInfo.getText() + "'");
-                }
-            }
-        } else {
-            //System.out.println("Displaying first string of content '" + text + "' :: x1 = " + x1);
-        }
-        
-        //System.out.println("[" + renderInfo.getStartPoint() + "]->[" + renderInfo.getEndPoint() + "] " + renderInfo.getText());
-        result.append(renderInfo.getText());
+	/**
+	 * Returns the result so far.
+	 * 
+	 * @return a String with the resulting text.
+	 */
+	public String getResultantText() {
+		return result.toString();
+	}
 
-        lastStart = start;
-        lastEnd = end;
-        
-    }
+	/**
+	 * Writes text to the result.
+	 * 
+	 * @param text
+	 *            The text that needs to be displayed
+	 * @param gs
+	 *            The current graphics state, including the current font and
+	 *            various spacings needed to compute glyph widths
+	 * @param renderInto
+	 *            The rectangle that the result will be rendered into
+	 * @param spaceWidth
+	 *            The scaled width of a space character in the current font
+	 * @see com.itextpdf.text.pdf.parser.RenderListener#renderText(String,
+	 *      GraphicsState, Rectangle)
+	 */
+
+	/**
+	 * Captures text using a simplified algorithm for inserting hard returns and
+	 * spaces
+	 * 
+	 * @see com.itextpdf.text.pdf.parser.AbstractRenderListener#renderText(java.lang.String,
+	 *      com.itextpdf.text.pdf.parser.GraphicsState,
+	 *      com.itextpdf.text.pdf.parser.Matrix,
+	 *      com.itextpdf.text.pdf.parser.Matrix)
+	 */
+	public void renderText(TextRenderInfo renderInfo) {
+		boolean firstRender = result.length() == 0;
+		boolean hardReturn = false;
+
+		Vector start = renderInfo.getStartPoint();
+		Vector end = renderInfo.getEndPoint();
+
+		if (!firstRender) {
+			Vector x0 = start;
+			Vector x1 = lastStart;
+			Vector x2 = lastEnd;
+
+			// see
+			// http://mathworld.wolfram.com/Point-LineDistance2-Dimensional.html
+			float dist = (x2.subtract(x1)).cross((x1.subtract(x0))).lengthSquared() / x2.subtract(x1).lengthSquared();
+
+			float sameLineThreshold = 1f; // we should probably base this on the
+											// current font metrics, but 1 pt
+											// seems to be sufficient for the
+											// time being
+			if (dist > sameLineThreshold)
+				hardReturn = true;
+
+			// Note: Technically, we should check both the start and end
+			// positions, in case the angle of the text changed without any
+			// displacement
+			// but this sort of thing probably doesn't happen much in reality,
+			// so we'll leave it alone for now
+		}
+
+		if (hardReturn) {
+			// System.out.println("<< Hard Return >>");
+			result.append('\n');
+		} else if (!firstRender) {
+			if (result.charAt(result.length() - 1) != ' ' && renderInfo.getText().charAt(0) != ' ') { // we
+																										// only
+																										// insert
+																										// a
+																										// blank
+																										// space
+																										// if
+																										// the
+																										// trailing
+																										// character
+																										// of
+																										// the
+																										// previous
+																										// string
+																										// wasn't
+																										// a
+																										// space,
+																										// and
+																										// the
+																										// leading
+																										// character
+																										// of
+																										// the
+																										// current
+																										// string
+																										// isn't
+																										// a
+																										// space
+				float spacing = lastEnd.subtract(start).length();
+				if (spacing > renderInfo.getSingleSpaceWidth() / 2f) {
+					result.append(' ');
+					// System.out.println("Inserting implied space before '" +
+					// renderInfo.getText() + "'");
+				}
+			}
+		} else {
+			// System.out.println("Displaying first string of content '" + text
+			// + "' :: x1 = " + x1);
+		}
+
+		// System.out.println("[" + renderInfo.getStartPoint() + "]->[" +
+		// renderInfo.getEndPoint() + "] " + renderInfo.getText());
+		result.append(renderInfo.getText());
+
+		lastStart = start;
+		lastEnd = end;
+
+	}
 
 }

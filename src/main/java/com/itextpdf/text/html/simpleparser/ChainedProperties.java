@@ -91,8 +91,7 @@ public class ChainedProperties {
 		String value = (String) prop.get(ElementTags.SIZE);
 		if (value != null) {
 			if (value.endsWith("pt")) {
-				prop.put(ElementTags.SIZE, value.substring(0,
-						value.length() - 2));
+				prop.put(ElementTags.SIZE, value.substring(0, value.length() - 2));
 			} else {
 				int s = 0;
 				if (value.startsWith("+") || value.startsWith("-")) {
@@ -107,8 +106,7 @@ public class ChainedProperties {
 							break;
 						}
 					}
-					int inc = Integer.parseInt(value.startsWith("+") ? value
-							.substring(1) : value);
+					int inc = Integer.parseInt(value.startsWith("+") ? value.substring(1) : value);
 					s += inc;
 				} else {
 					try {

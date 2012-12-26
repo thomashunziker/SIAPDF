@@ -32,58 +32,62 @@ package com.itextpdf.text.pdf.fonts.cmaps;
 
 /**
  * This represents a single entry in the codespace range.
- *
+ * 
  * @author Ben Litchfield (ben@benlitchfield.com)
  * @version $Revision: 3646 $
- * @since	2.1.4
+ * @since 2.1.4
  */
-public class CodespaceRange
-{
+public class CodespaceRange {
 
-    private byte[] start;
-    private byte[] end;
+	private byte[] start;
+	private byte[] end;
 
-    /**
-     * Creates a new instance of CodespaceRange.
-     */
-    public CodespaceRange()
-    {
-    }
+	/**
+	 * Creates a new instance of CodespaceRange.
+	 */
+	public CodespaceRange() {
+	}
 
-    /** Getter for property end.
-     * @return Value of property end.
-     *
-     */
-    public byte[] getEnd()
-    {
-        return this.end;
-    }
+	/**
+	 * Getter for property end.
+	 * 
+	 * @return Value of property end.
+	 * 
+	 */
+	public byte[] getEnd() {
+		return this.end;
+	}
 
-    /** Setter for property end.
-     * @param endBytes New value of property end.
-     *
-     */
-    public void setEnd(byte[] endBytes)
-    {
-        end = endBytes;
-    }
+	/**
+	 * Setter for property end.
+	 * 
+	 * @param endBytes
+	 *            New value of property end.
+	 * 
+	 */
+	public void setEnd(byte[] endBytes) {
+		end = endBytes;
+	}
 
-    /** Getter for property start.
-     * @return Value of property start.
-     *
-     */
-    public byte[] getStart()
-    {
-        return this.start;
-    }
+	/**
+	 * Getter for property start.
+	 * 
+	 * @return Value of property start.
+	 * 
+	 */
+	public byte[] getStart() {
+		return this.start;
+	}
 
-    /** Setter for property start.
-     * @param startBytes New value of property start.
-     *
-     */
-    public void setStart(byte[] startBytes)
-    {
-        start = startBytes;
-    }
+	/**
+	 * Setter for property start.
+	 * 
+	 * @param startBytes
+	 *            New value of property start.
+	 * 
+	 */
+	public void setStart(byte[] startBytes) {
+		start = startBytes;
+	}
 
 }

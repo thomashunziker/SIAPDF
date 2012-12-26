@@ -54,10 +54,10 @@ import java.util.Properties;
 
 /**
  * Wrapper that allows to add properties to 'basic building block' objects.
- * Before iText 1.5 every 'basic building block' implemented the MarkupAttributes interface.
- * By setting attributes, you could add markup to the corresponding XML and/or HTML tag.
- * This functionality was hardly used by anyone, so it was removed, and replaced by
- * the MarkedObject functionality.
+ * Before iText 1.5 every 'basic building block' implemented the
+ * MarkupAttributes interface. By setting attributes, you could add markup to
+ * the corresponding XML and/or HTML tag. This functionality was hardly used by
+ * anyone, so it was removed, and replaced by the MarkedObject functionality.
  */
 
 public class MarkedObject implements Element {
@@ -67,58 +67,58 @@ public class MarkedObject implements Element {
 
 	/** Contains extra markupAttributes */
 	protected Properties markupAttributes = new Properties();
-	    
+
 	/**
 	 * This constructor is for internal use only.
 	 */
 	protected MarkedObject() {
 		element = null;
 	}
-	
+
 	/**
 	 * Creates a MarkedObject.
 	 */
 	public MarkedObject(Element element) {
 		this.element = element;
 	}
-	
-    /**
-     * Gets all the chunks in this element.
-     *
-     * @return  an <CODE>ArrayList</CODE>
-     */
+
+	/**
+	 * Gets all the chunks in this element.
+	 * 
+	 * @return an <CODE>ArrayList</CODE>
+	 */
 	public ArrayList getChunks() {
 		return element.getChunks();
 	}
 
-    /**
-     * Processes the element by adding it (or the different parts) to an
-     * <CODE>ElementListener</CODE>.
-     *
-     * @param       listener        an <CODE>ElementListener</CODE>
-     * @return <CODE>true</CODE> if the element was processed successfully
-     */
+	/**
+	 * Processes the element by adding it (or the different parts) to an
+	 * <CODE>ElementListener</CODE>.
+	 * 
+	 * @param listener
+	 *            an <CODE>ElementListener</CODE>
+	 * @return <CODE>true</CODE> if the element was processed successfully
+	 */
 	public boolean process(ElementListener listener) {
-        try {
-            return listener.add(element);
-        }
-        catch(DocumentException de) {
-            return false;
-        }
+		try {
+			return listener.add(element);
+		} catch (DocumentException de) {
+			return false;
+		}
 	}
-	
-    /**
-     * Gets the type of the text element.
-     *
-     * @return  a type
-     */
+
+	/**
+	 * Gets the type of the text element.
+	 * 
+	 * @return a type
+	 */
 	public int type() {
 		return MARKED;
 	}
-	
+
 	/**
 	 * @see com.itextpdf.text.Element#isContent()
-	 * @since	iText 2.0.8
+	 * @since iText 2.0.8
 	 */
 	public boolean isContent() {
 		return true;
@@ -126,7 +126,7 @@ public class MarkedObject implements Element {
 
 	/**
 	 * @see com.itextpdf.text.Element#isNestable()
-	 * @since	iText 2.0.8
+	 * @since iText 2.0.8
 	 */
 	public boolean isNestable() {
 		return true;
@@ -134,12 +134,13 @@ public class MarkedObject implements Element {
 
 	/**
 	 * Getter for the markup attributes.
+	 * 
 	 * @return the markupAttributes
 	 */
 	public Properties getMarkupAttributes() {
 		return markupAttributes;
 	}
-	
+
 	/**
 	 * Adds one markup attribute.
 	 */

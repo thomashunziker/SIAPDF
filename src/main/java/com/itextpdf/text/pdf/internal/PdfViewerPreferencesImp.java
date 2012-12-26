@@ -60,59 +60,53 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.interfaces.PdfViewerPreferences;
 
 /**
- * Stores the information concerning viewer preferences,
- * and contains the business logic that allows you to set viewer preferences.
+ * Stores the information concerning viewer preferences, and contains the
+ * business logic that allows you to set viewer preferences.
  */
 
 public class PdfViewerPreferencesImp implements PdfViewerPreferences {
-	public static final PdfName[] VIEWER_PREFERENCES = {
-			PdfName.HIDETOOLBAR,			// 0
-			PdfName.HIDEMENUBAR,            // 1
-			PdfName.HIDEWINDOWUI,           // 2
-			PdfName.FITWINDOW,              // 3
-			PdfName.CENTERWINDOW,			// 4
-			PdfName.DISPLAYDOCTITLE,		// 5
-			PdfName.NONFULLSCREENPAGEMODE,	// 6
-			PdfName.DIRECTION,				// 7
-			PdfName.VIEWAREA,				// 8
-			PdfName.VIEWCLIP,				// 9
-			PdfName.PRINTAREA,				// 10
-			PdfName.PRINTCLIP,				// 11
-			PdfName.PRINTSCALING,			// 12
-			PdfName.DUPLEX,					// 13
-			PdfName.PICKTRAYBYPDFSIZE,		// 14
-			PdfName.PRINTPAGERANGE,			// 15
-			PdfName.NUMCOPIES				// 16
-		};
-
-
-    /** A series of viewer preferences. */
-    public static final PdfName NONFULLSCREENPAGEMODE_PREFERENCES[] = {
-    	PdfName.USENONE, PdfName.USEOUTLINES, PdfName.USETHUMBS, PdfName.USEOC
-    };
-    /** A series of viewer preferences. */
-    public static final PdfName DIRECTION_PREFERENCES[] = {
-    	PdfName.L2R, PdfName.R2L
-    };
-	/** A series of viewer preferences. */
-	public static final PdfName PAGE_BOUNDARIES[] = {
-		PdfName.MEDIABOX, PdfName.CROPBOX, PdfName.BLEEDBOX, PdfName.TRIMBOX, PdfName.ARTBOX
+	public static final PdfName[] VIEWER_PREFERENCES = { PdfName.HIDETOOLBAR, // 0
+			PdfName.HIDEMENUBAR, // 1
+			PdfName.HIDEWINDOWUI, // 2
+			PdfName.FITWINDOW, // 3
+			PdfName.CENTERWINDOW, // 4
+			PdfName.DISPLAYDOCTITLE, // 5
+			PdfName.NONFULLSCREENPAGEMODE, // 6
+			PdfName.DIRECTION, // 7
+			PdfName.VIEWAREA, // 8
+			PdfName.VIEWCLIP, // 9
+			PdfName.PRINTAREA, // 10
+			PdfName.PRINTCLIP, // 11
+			PdfName.PRINTSCALING, // 12
+			PdfName.DUPLEX, // 13
+			PdfName.PICKTRAYBYPDFSIZE, // 14
+			PdfName.PRINTPAGERANGE, // 15
+			PdfName.NUMCOPIES // 16
 	};
+
+	/** A series of viewer preferences. */
+	public static final PdfName NONFULLSCREENPAGEMODE_PREFERENCES[] = { PdfName.USENONE, PdfName.USEOUTLINES, PdfName.USETHUMBS, PdfName.USEOC };
+	/** A series of viewer preferences. */
+	public static final PdfName DIRECTION_PREFERENCES[] = { PdfName.L2R, PdfName.R2L };
+	/** A series of viewer preferences. */
+	public static final PdfName PAGE_BOUNDARIES[] = { PdfName.MEDIABOX, PdfName.CROPBOX, PdfName.BLEEDBOX, PdfName.TRIMBOX, PdfName.ARTBOX };
 	/** A series of viewer preferences */
-	public static final PdfName PRINTSCALING_PREFERENCES[] = {
-		PdfName.APPDEFAULT, PdfName.NONE
-	};
+	public static final PdfName PRINTSCALING_PREFERENCES[] = { PdfName.APPDEFAULT, PdfName.NONE };
 	/** A series of viewer preferences. */
-	public static final PdfName DUPLEX_PREFERENCES[] = {
-		PdfName.SIMPLEX, PdfName.DUPLEXFLIPSHORTEDGE, PdfName.DUPLEXFLIPLONGEDGE
-	};
-	
-	/** This value will hold the viewer preferences for the page layout and page mode. */
+	public static final PdfName DUPLEX_PREFERENCES[] = { PdfName.SIMPLEX, PdfName.DUPLEXFLIPSHORTEDGE, PdfName.DUPLEXFLIPLONGEDGE };
+
+	/**
+	 * This value will hold the viewer preferences for the page layout and page
+	 * mode.
+	 */
 	private int pageLayoutAndMode = 0;
-	
-	/** This dictionary holds the viewer preferences (other than page layout and page mode). */
+
+	/**
+	 * This dictionary holds the viewer preferences (other than page layout and
+	 * page mode).
+	 */
 	private PdfDictionary viewerPreferences = new PdfDictionary();
-	
+
 	/** The mask to decide if a ViewerPreferences dictionary is needed */
 	private static final int viewerPreferencesMask = 0xfff000;
 
@@ -129,7 +123,7 @@ public class PdfViewerPreferencesImp implements PdfViewerPreferences {
 	public PdfDictionary getViewerPreferences() {
 		return viewerPreferences;
 	}
-	
+
 	/**
 	 * Sets the viewer preferences as the sum of several constants.
 	 * 
@@ -155,7 +149,7 @@ public class PdfViewerPreferencesImp implements PdfViewerPreferences {
 				viewerPreferences.put(PdfName.CENTERWINDOW, PdfBoolean.PDFTRUE);
 			if ((preferences & PdfWriter.DisplayDocTitle) != 0)
 				viewerPreferences.put(PdfName.DISPLAYDOCTITLE, PdfBoolean.PDFTRUE);
-			
+
 			if ((preferences & PdfWriter.NonFullScreenPageModeUseNone) != 0)
 				viewerPreferences.put(PdfName.NONFULLSCREENPAGEMODE, PdfName.USENONE);
 			else if ((preferences & PdfWriter.NonFullScreenPageModeUseOutlines) != 0)
@@ -171,15 +165,17 @@ public class PdfViewerPreferencesImp implements PdfViewerPreferences {
 				viewerPreferences.put(PdfName.DIRECTION, PdfName.R2L);
 
 			if ((preferences & PdfWriter.PrintScalingNone) != 0)
-				viewerPreferences.put(PdfName.PRINTSCALING, PdfName.NONE);			
+				viewerPreferences.put(PdfName.PRINTSCALING, PdfName.NONE);
 		}
 	}
-	
+
 	/**
-	 * Given a key for a viewer preference (a PdfName object),
-	 * this method returns the index in the VIEWER_PREFERENCES array.
-	 * @param key	a PdfName referring to a viewer preference
-	 * @return	an index in the VIEWER_PREFERENCES array
+	 * Given a key for a viewer preference (a PdfName object), this method
+	 * returns the index in the VIEWER_PREFERENCES array.
+	 * 
+	 * @param key
+	 *            a PdfName referring to a viewer preference
+	 * @return an index in the VIEWER_PREFERENCES array
 	 */
 	private int getIndex(PdfName key) {
 		for (int i = 0; i < VIEWER_PREFERENCES.length; i++) {
@@ -188,7 +184,7 @@ public class PdfViewerPreferencesImp implements PdfViewerPreferences {
 		}
 		return -1;
 	}
-	
+
 	/**
 	 * Checks if some value is valid for a certain key.
 	 */
@@ -200,12 +196,12 @@ public class PdfViewerPreferencesImp implements PdfViewerPreferences {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Sets the viewer preferences for printing.
 	 */
 	public void addViewerPreference(PdfName key, PdfObject value) {
-		switch(getIndex(key)) {
+		switch (getIndex(key)) {
 		case 0: // HIDETOOLBAR
 		case 1: // HIDEMENUBAR
 		case 2: // HIDEWINDOWUI
@@ -218,35 +214,30 @@ public class PdfViewerPreferencesImp implements PdfViewerPreferences {
 			}
 			break;
 		case 6: // NONFULLSCREENPAGEMODE
-			if (value instanceof PdfName
-					&& isPossibleValue((PdfName)value, NONFULLSCREENPAGEMODE_PREFERENCES)) {
+			if (value instanceof PdfName && isPossibleValue((PdfName) value, NONFULLSCREENPAGEMODE_PREFERENCES)) {
 				viewerPreferences.put(key, value);
 			}
 			break;
 		case 7: // DIRECTION
-			if (value instanceof PdfName
-					&& isPossibleValue((PdfName)value, DIRECTION_PREFERENCES)) {
+			if (value instanceof PdfName && isPossibleValue((PdfName) value, DIRECTION_PREFERENCES)) {
 				viewerPreferences.put(key, value);
 			}
 			break;
-		case 8:  // VIEWAREA
-		case 9:  // VIEWCLIP
+		case 8: // VIEWAREA
+		case 9: // VIEWCLIP
 		case 10: // PRINTAREA
 		case 11: // PRINTCLIP
-			if (value instanceof PdfName
-					&& isPossibleValue((PdfName)value, PAGE_BOUNDARIES)) {
+			if (value instanceof PdfName && isPossibleValue((PdfName) value, PAGE_BOUNDARIES)) {
 				viewerPreferences.put(key, value);
 			}
 			break;
 		case 12: // PRINTSCALING
-			if (value instanceof PdfName
-					&& isPossibleValue((PdfName)value, PRINTSCALING_PREFERENCES)) {
+			if (value instanceof PdfName && isPossibleValue((PdfName) value, PRINTSCALING_PREFERENCES)) {
 				viewerPreferences.put(key, value);
 			}
 			break;
 		case 13: // DUPLEX
-			if (value instanceof PdfName
-					&& isPossibleValue((PdfName)value, DUPLEX_PREFERENCES)) {
+			if (value instanceof PdfName && isPossibleValue((PdfName) value, DUPLEX_PREFERENCES)) {
 				viewerPreferences.put(key, value);
 			}
 			break;
@@ -256,7 +247,7 @@ public class PdfViewerPreferencesImp implements PdfViewerPreferences {
 			}
 			break;
 		case 16: // NUMCOPIES
-			if (value instanceof PdfNumber)  {
+			if (value instanceof PdfNumber) {
 				viewerPreferences.put(key, value);
 			}
 			break;
@@ -348,8 +339,7 @@ public class PdfViewerPreferencesImp implements PdfViewerPreferences {
 		// set page layout and page mode preferences
 		preferences.setViewerPreferences(prefs);
 		// other preferences
-		obj = PdfReader.getPdfObjectRelease(catalog
-				.get(PdfName.VIEWERPREFERENCES));
+		obj = PdfReader.getPdfObjectRelease(catalog.get(PdfName.VIEWERPREFERENCES));
 		if (obj != null && obj.isDictionary()) {
 			PdfDictionary vp = (PdfDictionary) obj;
 			for (int i = 0; i < VIEWER_PREFERENCES.length; i++) {

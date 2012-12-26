@@ -61,12 +61,12 @@ import com.itextpdf.text.html.HtmlTags;
 import com.itextpdf.text.xml.simpleparser.SimpleXMLDocHandler;
 import com.itextpdf.text.xml.simpleparser.SimpleXMLParser;
 
-/** Parses the xml hyphenation pattern.
- *
+/**
+ * Parses the xml hyphenation pattern.
+ * 
  * @author Paulo Soares (psoares@consiste.pt)
  */
-public class SimplePatternParser implements SimpleXMLDocHandler,
-		PatternConsumer {
+public class SimplePatternParser implements SimpleXMLDocHandler, PatternConsumer {
 	int currElement;
 
 	PatternConsumer consumer;
@@ -193,12 +193,10 @@ public class SimplePatternParser implements SimpleXMLDocHandler,
 			case ELEM_EXCEPTIONS:
 				exception.add(word);
 				exception = normalizeException(exception);
-				consumer.addException(getExceptionWord(exception),
-						(ArrayList) exception.clone());
+				consumer.addException(getExceptionWord(exception), (ArrayList) exception.clone());
 				break;
 			case ELEM_PATTERNS:
-				consumer.addPattern(getPattern(word),
-						getInterletterValues(word));
+				consumer.addPattern(getPattern(word), getInterletterValues(word));
 				break;
 			case ELEM_HYPHEN:
 				// nothing to do
@@ -235,8 +233,7 @@ public class SimplePatternParser implements SimpleXMLDocHandler,
 			if (token.length() > 0) {
 				exception.add(token.toString());
 			}
-			exception.add(new Hyphen((String) h.get(HtmlTags.PRE), (String) h
-					.get("no"), (String) h.get("post")));
+			exception.add(new Hyphen((String) h.get(HtmlTags.PRE), (String) h.get("no"), (String) h.get("post")));
 			currElement = ELEM_HYPHEN;
 		}
 		token.setLength(0);
@@ -254,13 +251,11 @@ public class SimplePatternParser implements SimpleXMLDocHandler,
 			case ELEM_EXCEPTIONS:
 				exception.add(word);
 				exception = normalizeException(exception);
-				consumer.addException(getExceptionWord(exception),
-						(ArrayList) exception.clone());
+				consumer.addException(getExceptionWord(exception), (ArrayList) exception.clone());
 				exception.clear();
 				break;
 			case ELEM_PATTERNS:
-				consumer.addPattern(getPattern(word),
-						getInterletterValues(word));
+				consumer.addPattern(getPattern(word), getInterletterValues(word));
 				break;
 			}
 		}

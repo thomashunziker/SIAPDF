@@ -63,7 +63,7 @@ import com.itextpdf.text.error_messages.MessageLocalization;
  * @author blowagie
  */
 public class WebColors extends HashMap {
-    
+
 	private static final long serialVersionUID = 3542523100813372896L;
 	/** HashMap containing all the names and corresponding color values. */
 	public static final WebColors NAMES = new WebColors();
@@ -215,14 +215,13 @@ public class WebColors extends HashMap {
 	 * Gives you a Color based on a name.
 	 * 
 	 * @param name
-	 *            a name such as black, violet, cornflowerblue or #RGB or #RRGGBB
-     *            or rgb(R,G,B)
+	 *            a name such as black, violet, cornflowerblue or #RGB or
+	 *            #RRGGBB or rgb(R,G,B)
 	 * @return the corresponding Color object
 	 * @throws IllegalArgumentException
 	 *             if the String isn't a know representation of a color.
 	 */
-	public static Color getRGBColor(String name)
-			throws IllegalArgumentException {
+	public static Color getRGBColor(String name) throws IllegalArgumentException {
 		int[] c = { 0, 0, 0, 0 };
 		if (name.startsWith("#")) {
 			if (name.length() == 4) {
@@ -238,26 +237,24 @@ public class WebColors extends HashMap {
 				return new Color(c[0], c[1], c[2], c[3]);
 			}
 			throw new IllegalArgumentException(MessageLocalization.getComposedMessage("unknown.color.format.must.be.rgb.or.rrggbb"));
+		} else if (name.startsWith("rgb(")) {
+			StringTokenizer tok = new StringTokenizer(name, "rgb(), \t\r\n\f");
+			for (int k = 0; k < 3; ++k) {
+				String v = tok.nextToken();
+				if (v.endsWith("%"))
+					c[k] = Integer.parseInt(v.substring(0, v.length() - 1)) * 255 / 100;
+				else
+					c[k] = Integer.parseInt(v);
+				if (c[k] < 0)
+					c[k] = 0;
+				else if (c[k] > 255)
+					c[k] = 255;
+			}
+			return new Color(c[0], c[1], c[2], c[3]);
 		}
-        else if (name.startsWith("rgb(")) {
-            StringTokenizer tok = new StringTokenizer(name, "rgb(), \t\r\n\f");
-            for (int k = 0; k < 3; ++k) {
-                String v = tok.nextToken();
-                if (v.endsWith("%"))
-                    c[k] = Integer.parseInt(v.substring(0, v.length() - 1)) * 255 / 100;
-                else
-                    c[k] = Integer.parseInt(v);
-                if (c[k] < 0)
-                    c[k] = 0;
-                else if (c[k] > 255)
-                    c[k] = 255;
-            }
-            return new Color(c[0], c[1], c[2], c[3]);
-        }
 		name = name.toLowerCase();
 		if (!NAMES.containsKey(name))
-			throw new IllegalArgumentException("Color '" + name
-					+ "' not found.");
+			throw new IllegalArgumentException("Color '" + name + "' not found.");
 		c = (int[]) NAMES.get(name);
 		return new Color(c[0], c[1], c[2], c[3]);
 	}

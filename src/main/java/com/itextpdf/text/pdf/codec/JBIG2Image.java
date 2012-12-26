@@ -56,39 +56,44 @@ import com.itextpdf.text.error_messages.MessageLocalization;
 import com.itextpdf.text.pdf.RandomAccessFileOrArray;
 
 /**
- * Support for JBIG2 Images.
- * This class assumes that we are always embedding into a pdf.
+ * Support for JBIG2 Images. This class assumes that we are always embedding
+ * into a pdf.
  * 
  * @since 2.1.5
  */
 public class JBIG2Image {
 
 	/**
-	 * Gets a byte array that can be used as a /JBIG2Globals,
-	 * or null if not applicable to the given jbig2.
-	 * @param	ra	an random access file or array
-	 * @return	a byte array
+	 * Gets a byte array that can be used as a /JBIG2Globals, or null if not
+	 * applicable to the given jbig2.
+	 * 
+	 * @param ra
+	 *            an random access file or array
+	 * @return a byte array
 	 */
-	public static byte[] getGlobalSegment(RandomAccessFileOrArray ra ) {
+	public static byte[] getGlobalSegment(RandomAccessFileOrArray ra) {
 		try {
 			JBIG2SegmentReader sr = new JBIG2SegmentReader(ra);
 			sr.read();
 			return sr.getGlobal(true);
 		} catch (Exception e) {
-	        return null;
-	    }
+			return null;
+		}
 	}
-	
+
 	/**
 	 * returns an Image representing the given page.
-	 * @param ra	the file or array containing the image
-	 * @param page	the page number of the image
-	 * @return	an Image object
+	 * 
+	 * @param ra
+	 *            the file or array containing the image
+	 * @param page
+	 *            the page number of the image
+	 * @return an Image object
 	 */
 	public static Image getJbig2Image(RandomAccessFileOrArray ra, int page) {
 		if (page < 1)
-            throw new IllegalArgumentException(MessageLocalization.getComposedMessage("the.page.number.must.be.gt.eq.1"));
-		
+			throw new IllegalArgumentException(MessageLocalization.getComposedMessage("the.page.number.must.be.gt.eq.1"));
+
 		try {
 			JBIG2SegmentReader sr = new JBIG2SegmentReader(ra);
 			sr.read();
@@ -96,14 +101,16 @@ public class JBIG2Image {
 			Image img = new ImgJBIG2(p.pageBitmapWidth, p.pageBitmapHeight, p.getData(true), sr.getGlobal(true));
 			return img;
 		} catch (Exception e) {
-	        throw new ExceptionConverter(e);
-	    }
+			throw new ExceptionConverter(e);
+		}
 	}
 
 	/***
 	 * Gets the number of pages in a JBIG2 image.
-	 * @param ra	a random acces file array containing a JBIG2 image
-	 * @return	the number of pages
+	 * 
+	 * @param ra
+	 *            a random acces file array containing a JBIG2 image
+	 * @return the number of pages
 	 */
 	public static int getNumberOfPages(RandomAccessFileOrArray ra) {
 		try {
@@ -111,9 +118,8 @@ public class JBIG2Image {
 			sr.read();
 			return sr.numberOfPages();
 		} catch (Exception e) {
-	        throw new ExceptionConverter(e);
-	    }
-    }
-	
-	
+			throw new ExceptionConverter(e);
+		}
+	}
+
 }

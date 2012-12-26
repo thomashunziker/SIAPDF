@@ -47,19 +47,23 @@
 package com.itextpdf.text.pdf.parser;
 
 /**
- * Callback interface for render operations during {@link PdfContentStreamProcessor} execution
- * @since    2.1.6
+ * Callback interface for render operations during
+ * {@link PdfContentStreamProcessor} execution
+ * 
+ * @since 2.1.6
  */
 public interface RenderListener {
 
-    /**
-     * Called when text should be rendered
-     * @param renderInfo information specifying what to render
-     */
-    public void renderText(TextRenderInfo renderInfo);
+	/**
+	 * Called when text should be rendered
+	 * 
+	 * @param renderInfo
+	 *            information specifying what to render
+	 */
+	public void renderText(TextRenderInfo renderInfo);
 
-    /**
-     * Resets the internal state of the RenderListener
-     */
-    public void reset();
+	/**
+	 * Resets the internal state of the RenderListener
+	 */
+	public void reset();
 }

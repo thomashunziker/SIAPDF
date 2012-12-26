@@ -263,7 +263,9 @@ public class HtmlTags {
 	/** the image tag */
 	public static final String IMAGE = "img";
 
-	/** attribute of the image tag 
+	/**
+	 * attribute of the image tag
+	 * 
 	 * @see com.itextpdf.text.ElementTags#SRC
 	 */
 	public static final String URL = "src";
@@ -333,8 +335,10 @@ public class HtmlTags {
 	/** This is a possible HTML attribute. */
 	public static final String STYLESHEET = "stylesheet";
 
-	/** This is a possible HTML attribute for auto-formated 
-     * @since 2.1.3
-     */
+	/**
+	 * This is a possible HTML attribute for auto-formated
+	 * 
+	 * @since 2.1.3
+	 */
 	public static final String PRE = "pre";
 }

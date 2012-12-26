@@ -69,14 +69,15 @@ import com.itextpdf.text.html.Markup;
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.HyphenationAuto;
 import com.itextpdf.text.pdf.HyphenationEvent;
+
 /**
- *
- * @author  psoares
+ * 
+ * @author psoares
  */
 public class FactoryProperties {
 
 	/**
-	 * @since	iText 5.0	This used to be a FontFactoryImp
+	 * @since iText 5.0 This used to be a FontFactoryImp
 	 */
 	private FontProvider fontImp = FontFactory.getFontImp();
 
@@ -200,10 +201,13 @@ public class FactoryProperties {
 	}
 
 	/**
-	 * Gets a HyphenationEvent based on the hyphenation entry in ChainedProperties.
-	 * @param	props	ChainedProperties
-	 * @return	a HyphenationEvent
-	 * @since	2.1.2
+	 * Gets a HyphenationEvent based on the hyphenation entry in
+	 * ChainedProperties.
+	 * 
+	 * @param props
+	 *            ChainedProperties
+	 * @return a HyphenationEvent
+	 * @since 2.1.2
 	 */
 	public static HyphenationEvent getHyphenation(ChainedProperties props) {
 		return getHyphenation(props.getProperty("hyphenation"));
@@ -211,20 +215,24 @@ public class FactoryProperties {
 
 	/**
 	 * Gets a HyphenationEvent based on the hyphenation entry in a HashMap.
-	 * @param	props	a HashMap with properties
-	 * @return	a HyphenationEvent
-	 * @since	2.1.2
+	 * 
+	 * @param props
+	 *            a HashMap with properties
+	 * @return a HyphenationEvent
+	 * @since 2.1.2
 	 */
 	public static HyphenationEvent getHyphenation(HashMap props) {
 		return getHyphenation((String) props.get("hyphenation"));
 	}
 
 	/**
-	 * Gets a HyphenationEvent based on a String.
-	 * For instance "en_UK,3,2" returns new HyphenationAuto("en", "UK", 3, 2);
-	 * @param	s a String, for instance "en_UK,2,2"
-	 * @return	a HyphenationEvent
-	 * @since	2.1.2
+	 * Gets a HyphenationEvent based on a String. For instance "en_UK,3,2"
+	 * returns new HyphenationAuto("en", "UK", 3, 2);
+	 * 
+	 * @param s
+	 *            a String, for instance "en_UK,2,2"
+	 * @return a HyphenationEvent
+	 * @since 2.1.2
 	 */
 	public static HyphenationEvent getHyphenation(String s) {
 		if (s == null || s.length() == 0) {
@@ -258,12 +266,13 @@ public class FactoryProperties {
 	}
 
 	/**
-	 * This method isn't used by iText, but you can use it to analyze
-	 * the value of a style attribute inside a HashMap.
-	 * The different elements of the style attribute are added to the
-	 * HashMap as key-value pairs.
-	 * @param	h	a HashMap that should have at least a key named
-	 * style. After this method is invoked, more keys could be added.
+	 * This method isn't used by iText, but you can use it to analyze the value
+	 * of a style attribute inside a HashMap. The different elements of the
+	 * style attribute are added to the HashMap as key-value pairs.
+	 * 
+	 * @param h
+	 *            a HashMap that should have at least a key named style. After
+	 *            this method is invoked, more keys could be added.
 	 */
 	public static void insertStyle(HashMap h) {
 		String style = (String) h.get("style");
@@ -275,17 +284,14 @@ public class FactoryProperties {
 			if (key.equals(Markup.CSS_KEY_FONTFAMILY)) {
 				h.put("face", prop.getProperty(key));
 			} else if (key.equals(Markup.CSS_KEY_FONTSIZE)) {
-				h.put("size", Float.toString(Markup.parseLength(prop
-						.getProperty(key)))
-						+ "pt");
+				h.put("size", Float.toString(Markup.parseLength(prop.getProperty(key))) + "pt");
 			} else if (key.equals(Markup.CSS_KEY_FONTSTYLE)) {
 				String ss = prop.getProperty(key).trim().toLowerCase();
 				if (ss.equals("italic") || ss.equals("oblique"))
 					h.put("i", null);
 			} else if (key.equals(Markup.CSS_KEY_FONTWEIGHT)) {
 				String ss = prop.getProperty(key).trim().toLowerCase();
-				if (ss.equals("bold") || ss.equals("700") || ss.equals("800")
-						|| ss.equals("900"))
+				if (ss.equals("bold") || ss.equals("700") || ss.equals("800") || ss.equals("900"))
 					h.put("b", null);
 			} else if (key.equals(Markup.CSS_KEY_TEXTDECORATION)) {
 				String ss = prop.getProperty(key).trim().toLowerCase();
@@ -307,8 +313,7 @@ public class FactoryProperties {
 					h.put("leading", "0," + (v / 100));
 				} else if ("normal".equalsIgnoreCase(ss)) {
 					h.put("leading", "0,1.5");
-				}
-				else {
+				} else {
 					h.put("leading", v + ",0");
 				}
 			} else if (key.equals(Markup.CSS_KEY_TEXTALIGN)) {
@@ -320,6 +325,7 @@ public class FactoryProperties {
 
 	/**
 	 * New method contributed by Lubos Strapko
+	 * 
 	 * @param h
 	 * @param cprops
 	 * @since 2.1.3
@@ -334,22 +340,17 @@ public class FactoryProperties {
 			if (key.equals(Markup.CSS_KEY_FONTFAMILY)) {
 				h.put(ElementTags.FACE, prop.getProperty(key));
 			} else if (key.equals(Markup.CSS_KEY_FONTSIZE)) {
-				float actualFontSize = Markup.parseLength(cprops
-						.getProperty(ElementTags.SIZE),
-						Markup.DEFAULT_FONT_SIZE);
+				float actualFontSize = Markup.parseLength(cprops.getProperty(ElementTags.SIZE), Markup.DEFAULT_FONT_SIZE);
 				if (actualFontSize <= 0f)
 					actualFontSize = Markup.DEFAULT_FONT_SIZE;
-				h.put(ElementTags.SIZE, Float.toString(Markup.parseLength(prop
-						.getProperty(key), actualFontSize))
-						+ "pt");
+				h.put(ElementTags.SIZE, Float.toString(Markup.parseLength(prop.getProperty(key), actualFontSize)) + "pt");
 			} else if (key.equals(Markup.CSS_KEY_FONTSTYLE)) {
 				String ss = prop.getProperty(key).trim().toLowerCase();
 				if (ss.equals("italic") || ss.equals("oblique"))
 					h.put("i", null);
 			} else if (key.equals(Markup.CSS_KEY_FONTWEIGHT)) {
 				String ss = prop.getProperty(key).trim().toLowerCase();
-				if (ss.equals("bold") || ss.equals("700") || ss.equals("800")
-						|| ss.equals("900"))
+				if (ss.equals("bold") || ss.equals("700") || ss.equals("800") || ss.equals("900"))
 					h.put("b", null);
 			} else if (key.equals(Markup.CSS_KEY_TEXTDECORATION)) {
 				String ss = prop.getProperty(key).trim().toLowerCase();
@@ -366,13 +367,10 @@ public class FactoryProperties {
 				}
 			} else if (key.equals(Markup.CSS_KEY_LINEHEIGHT)) {
 				String ss = prop.getProperty(key).trim();
-				float actualFontSize = Markup.parseLength(cprops
-						.getProperty(ElementTags.SIZE),
-						Markup.DEFAULT_FONT_SIZE);
+				float actualFontSize = Markup.parseLength(cprops.getProperty(ElementTags.SIZE), Markup.DEFAULT_FONT_SIZE);
 				if (actualFontSize <= 0f)
 					actualFontSize = Markup.DEFAULT_FONT_SIZE;
-				float v = Markup.parseLength(prop.getProperty(key),
-						actualFontSize);
+				float v = Markup.parseLength(prop.getProperty(key), actualFontSize);
 				if (ss.endsWith("%")) {
 					h.put("leading", "0," + (v / 100));
 					return;

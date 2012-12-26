@@ -54,41 +54,43 @@ import java.net.URL;
 import com.itextpdf.text.error_messages.MessageLocalization;
 import com.itextpdf.text.pdf.PdfTemplate;
 
-
 /**
  * PdfTemplate that has to be inserted into the document
- *
- * @see		Element
- * @see		Image
- *
- * @author  Paulo Soares
+ * 
+ * @see Element
+ * @see Image
+ * 
+ * @author Paulo Soares
  */
 
 public class ImgTemplate extends Image {
-    
-    ImgTemplate(Image image) {
-        super(image);
-    }
-    
-    /** Creates an Image from a PdfTemplate.
-     *
-     * @param template the PdfTemplate
-     * @throws BadElementException on error
-     */
-    public ImgTemplate(PdfTemplate template) throws BadElementException{
-        super((URL)null);
-        if (template == null)
-            throw new BadElementException(MessageLocalization.getComposedMessage("the.template.can.not.be.null"));
-        if (template.getType() == PdfTemplate.TYPE_PATTERN)
-            throw new BadElementException(MessageLocalization.getComposedMessage("a.pattern.can.not.be.used.as.a.template.to.create.an.image"));
-        type = IMGTEMPLATE;
-        scaledHeight = template.getHeight();
-        setTop(scaledHeight);
-        scaledWidth = template.getWidth();
-        setRight(scaledWidth);
-        setTemplateData(template);
-        plainWidth = getWidth();
-        plainHeight = getHeight();
-    }
-	
+
+	ImgTemplate(Image image) {
+		super(image);
+	}
+
+	/**
+	 * Creates an Image from a PdfTemplate.
+	 * 
+	 * @param template
+	 *            the PdfTemplate
+	 * @throws BadElementException
+	 *             on error
+	 */
+	public ImgTemplate(PdfTemplate template) throws BadElementException {
+		super((URL) null);
+		if (template == null)
+			throw new BadElementException(MessageLocalization.getComposedMessage("the.template.can.not.be.null"));
+		if (template.getType() == PdfTemplate.TYPE_PATTERN)
+			throw new BadElementException(MessageLocalization.getComposedMessage("a.pattern.can.not.be.used.as.a.template.to.create.an.image"));
+		type = IMGTEMPLATE;
+		scaledHeight = template.getHeight();
+		setTop(scaledHeight);
+		scaledWidth = template.getWidth();
+		setRight(scaledWidth);
+		setTemplateData(template);
+		plainWidth = getWidth();
+		plainHeight = getHeight();
+	}
+
 }

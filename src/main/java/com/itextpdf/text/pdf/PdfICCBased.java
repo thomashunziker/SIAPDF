@@ -51,53 +51,56 @@ import java.awt.color.ICC_Profile;
 import com.itextpdf.text.ExceptionConverter;
 import com.itextpdf.text.error_messages.MessageLocalization;
 
-
 /**
  * A <CODE>PdfICCBased</CODE> defines a ColorSpace
- *
- * @see		PdfStream
+ * 
+ * @see PdfStream
  */
 
 public class PdfICCBased extends PdfStream {
 
-    /**
-     * Creates an ICC stream.
-     * @param	profile an ICC profile
-     */
-    public PdfICCBased(ICC_Profile profile) {
-    	this(profile, DEFAULT_COMPRESSION);
-    }
-    
-    /**
-     * Creates an ICC stream.
-     *
-     * @param	compressionLevel	the compressionLevel
-     *
-     * @param	profile an ICC profile
-     * @since	2.1.3	(replacing the constructor without param compressionLevel)
-     */
-    public PdfICCBased(ICC_Profile profile, int compressionLevel) {
-        super();
-        try {
-            int numberOfComponents = profile.getNumComponents();
-            switch (numberOfComponents) {
-                case 1:
-                    put(PdfName.ALTERNATE, PdfName.DEVICEGRAY);
-                    break;
-                case 3:
-                    put(PdfName.ALTERNATE, PdfName.DEVICERGB);
-                    break;
-                case 4:
-                    put(PdfName.ALTERNATE, PdfName.DEVICECMYK);
-                    break;
-                default:
-                    throw new PdfException(MessageLocalization.getComposedMessage("1.component.s.is.not.supported", numberOfComponents));
-            }
-            put(PdfName.N, new PdfNumber(numberOfComponents));
-            bytes = profile.getData();
-            flateCompress(compressionLevel);
-        } catch (Exception e) {
-            throw new ExceptionConverter(e);
-        }
-    }
+	/**
+	 * Creates an ICC stream.
+	 * 
+	 * @param profile
+	 *            an ICC profile
+	 */
+	public PdfICCBased(ICC_Profile profile) {
+		this(profile, DEFAULT_COMPRESSION);
+	}
+
+	/**
+	 * Creates an ICC stream.
+	 * 
+	 * @param compressionLevel
+	 *            the compressionLevel
+	 * 
+	 * @param profile
+	 *            an ICC profile
+	 * @since 2.1.3 (replacing the constructor without param compressionLevel)
+	 */
+	public PdfICCBased(ICC_Profile profile, int compressionLevel) {
+		super();
+		try {
+			int numberOfComponents = profile.getNumComponents();
+			switch (numberOfComponents) {
+			case 1:
+				put(PdfName.ALTERNATE, PdfName.DEVICEGRAY);
+				break;
+			case 3:
+				put(PdfName.ALTERNATE, PdfName.DEVICERGB);
+				break;
+			case 4:
+				put(PdfName.ALTERNATE, PdfName.DEVICECMYK);
+				break;
+			default:
+				throw new PdfException(MessageLocalization.getComposedMessage("1.component.s.is.not.supported", numberOfComponents));
+			}
+			put(PdfName.N, new PdfNumber(numberOfComponents));
+			bytes = profile.getData();
+			flateCompress(compressionLevel);
+		} catch (Exception e) {
+			throw new ExceptionConverter(e);
+		}
+	}
 }

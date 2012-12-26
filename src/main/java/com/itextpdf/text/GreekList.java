@@ -57,8 +57,8 @@ import com.itextpdf.text.factories.GreekAlphabetFactory;
 
 public class GreekList extends List {
 
-// constructors
-	
+	// constructors
+
 	/**
 	 * Initialization
 	 */
@@ -66,10 +66,12 @@ public class GreekList extends List {
 		super(true);
 		setGreekFont();
 	}
+
 	/**
 	 * Initialization
 	 * 
-	 * @param symbolIndent	indent
+	 * @param symbolIndent
+	 *            indent
 	 */
 	public GreekList(int symbolIndent) {
 		super(true, symbolIndent);
@@ -77,9 +79,12 @@ public class GreekList extends List {
 	}
 
 	/**
-	 * Initialization 
-	 * @param	greeklower		greek-char in lowercase   
-	 * @param 	symbolIndent	indent
+	 * Initialization
+	 * 
+	 * @param greeklower
+	 *            greek-char in lowercase
+	 * @param symbolIndent
+	 *            indent
 	 */
 	public GreekList(boolean greeklower, int symbolIndent) {
 		super(true, symbolIndent);
@@ -87,8 +92,8 @@ public class GreekList extends List {
 		setGreekFont();
 	}
 
-// helper method
-	
+	// helper method
+
 	/**
 	 * change the font to SYMBOL
 	 */
@@ -97,12 +102,13 @@ public class GreekList extends List {
 		symbol.setFont(FontFactory.getFont(FontFactory.SYMBOL, fontsize, Font.NORMAL));
 	}
 
-// overridden method
-	
+	// overridden method
+
 	/**
 	 * Adds an <CODE>Object</CODE> to the <CODE>List</CODE>.
-	 *
-	 * @param	o	the object to add.
+	 * 
+	 * @param o
+	 *            the object to add.
 	 * @return true if adding the object succeeded
 	 */
 	public boolean add(Object o) {

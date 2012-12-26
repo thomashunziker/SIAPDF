@@ -60,20 +60,15 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.interfaces.PdfVersion;
 
 /**
- * Stores the PDF version information,
- * knows how to write a PDF Header,
- * and how to add the version to the catalog (if necessary).
+ * Stores the PDF version information, knows how to write a PDF Header, and how
+ * to add the version to the catalog (if necessary).
  */
 
 public class PdfVersionImp implements PdfVersion {
-    
-    /** Contains different strings that are part of the header. */
-    public static final byte[][] HEADER = {
-    	DocWriter.getISOBytes("\n"),
-    	DocWriter.getISOBytes("%PDF-"),
-    	DocWriter.getISOBytes("\n%\u00e2\u00e3\u00cf\u00d3\n")
-    };
-    
+
+	/** Contains different strings that are part of the header. */
+	public static final byte[][] HEADER = { DocWriter.getISOBytes("\n"), DocWriter.getISOBytes("%PDF-"), DocWriter.getISOBytes("\n%\u00e2\u00e3\u00cf\u00d3\n") };
+
 	/** Indicates if the header was already written. */
 	protected boolean headerWasWritten = false;
 	/** Indicates if we are working in append mode. */
@@ -84,22 +79,22 @@ public class PdfVersionImp implements PdfVersion {
 	protected PdfName catalog_version = null;
 	/**
 	 * The extensions dictionary.
-	 * @since	2.1.6
+	 * 
+	 * @since 2.1.6
 	 */
 	protected PdfDictionary extensions = null;
-	
+
 	/**
 	 * @see com.itextpdf.text.pdf.interfaces.PdfVersion#setPdfVersion(char)
 	 */
 	public void setPdfVersion(char version) {
 		if (headerWasWritten || appendmode) {
 			setPdfVersion(getVersionAsName(version));
-		}
-		else {
+		} else {
 			this.header_version = version;
 		}
 	}
-	
+
 	/**
 	 * @see com.itextpdf.text.pdf.interfaces.PdfVersion#setAtLeastPdfVersion(char)
 	 */
@@ -108,7 +103,7 @@ public class PdfVersionImp implements PdfVersion {
 			setPdfVersion(version);
 		}
 	}
-	
+
 	/**
 	 * @see com.itextpdf.text.pdf.interfaces.PdfVersion#setPdfVersion(com.itextpdf.text.pdf.PdfName)
 	 */
@@ -117,36 +112,38 @@ public class PdfVersionImp implements PdfVersion {
 			this.catalog_version = version;
 		}
 	}
-	
+
 	/**
 	 * Sets the append mode.
 	 */
 	public void setAppendmode(boolean appendmode) {
 		this.appendmode = appendmode;
 	}
-	
+
 	/**
 	 * Writes the header to the OutputStreamCounter.
-	 * @throws IOException 
+	 * 
+	 * @throws IOException
 	 */
 	public void writeHeader(OutputStreamCounter os) throws IOException {
 		if (appendmode) {
 			os.write(HEADER[0]);
-		}
-		else {
+		} else {
 			os.write(HEADER[1]);
 			os.write(getVersionAsByteArray(header_version));
 			os.write(HEADER[2]);
 			headerWasWritten = true;
 		}
 	}
-	
+
 	/**
 	 * Returns the PDF version as a name.
-	 * @param version	the version character.
+	 * 
+	 * @param version
+	 *            the version character.
 	 */
 	public PdfName getVersionAsName(char version) {
-		switch(version) {
+		switch (version) {
 		case PdfWriter.VERSION_1_2:
 			return PdfWriter.PDF_VERSION_1_2;
 		case PdfWriter.VERSION_1_3:
@@ -163,10 +160,12 @@ public class PdfVersionImp implements PdfVersion {
 			return PdfWriter.PDF_VERSION_1_4;
 		}
 	}
-	
+
 	/**
 	 * Returns the version as a byte[].
-	 * @param version the version character
+	 * 
+	 * @param version
+	 *            the version character
 	 */
 	public byte[] getVersionAsByteArray(char version) {
 		return DocWriter.getISOBytes(getVersionAsName(version).toString().substring(1));
@@ -174,7 +173,7 @@ public class PdfVersionImp implements PdfVersion {
 
 	/** Adds the version to the Catalog dictionary. */
 	public void addToCatalog(PdfDictionary catalog) {
-		if(catalog_version != null) {
+		if (catalog_version != null) {
 			catalog.put(PdfName.VERSION, catalog_version);
 		}
 		if (extensions != null) {
@@ -184,13 +183,12 @@ public class PdfVersionImp implements PdfVersion {
 
 	/**
 	 * @see com.itextpdf.text.pdf.interfaces.PdfVersion#addDeveloperExtension(com.itextpdf.text.pdf.PdfDeveloperExtension)
-	 * @since	2.1.6
+	 * @since 2.1.6
 	 */
 	public void addDeveloperExtension(PdfDeveloperExtension de) {
 		if (extensions == null) {
 			extensions = new PdfDictionary();
-		}
-		else {
+		} else {
 			PdfDictionary extension = extensions.getAsDict(de.getPrefix());
 			if (extension != null) {
 				int diff = de.getBaseversion().compareTo(extension.getAsName(PdfName.BASEVERSION));

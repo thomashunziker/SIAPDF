@@ -405,7 +405,7 @@ public class Font implements Comparable {
 	}
 
 	// SIZE
-	
+
 	/**
 	 * Gets the size of this font.
 	 * 
@@ -452,7 +452,7 @@ public class Font implements Comparable {
 	}
 
 	// STYLE
-	
+
 	/**
 	 * Gets the style of this font.
 	 * 
@@ -541,8 +541,8 @@ public class Font implements Comparable {
 	}
 
 	/**
-	 * Sets the style using a <CODE>String</CODE> containing one of more of
-	 * the following values: normal, bold, italic, underline, strike.
+	 * Sets the style using a <CODE>String</CODE> containing one of more of the
+	 * following values: normal, bold, italic, underline, strike.
 	 * 
 	 * @param style
 	 *            A <CODE>String</CODE> representing a certain style.
@@ -554,8 +554,8 @@ public class Font implements Comparable {
 	}
 
 	/**
-	 * Translates a <CODE>String</CODE> -value of a certain style into the
-	 * index value is used for this style in this class.
+	 * Translates a <CODE>String</CODE> -value of a certain style into the index
+	 * value is used for this style in this class.
 	 * 
 	 * @param style
 	 *            A <CODE>String</CODE>
@@ -585,7 +585,7 @@ public class Font implements Comparable {
 	}
 
 	// COLOR
-	
+
 	/**
 	 * Gets the color of this font.
 	 * 
@@ -664,7 +664,7 @@ public class Font implements Comparable {
 				fontName = BaseFont.COURIER_BOLDOBLIQUE;
 				break;
 			default:
-				//case NORMAL:
+				// case NORMAL:
 				fontName = BaseFont.COURIER;
 				break;
 			}
@@ -722,8 +722,7 @@ public class Font implements Comparable {
 		}
 		return cfont;
 	}
-	
-	
+
 	// Helper methods
 
 	/**
@@ -734,8 +733,7 @@ public class Font implements Comparable {
 	 * @return a <CODE>boolean</CODE>
 	 */
 	public boolean isStandardFont() {
-		return (family == UNDEFINED && size == UNDEFINED && style == UNDEFINED
-				&& color == null && baseFont == null);
+		return (family == UNDEFINED && size == UNDEFINED && style == UNDEFINED && color == null && baseFont == null);
 	}
 
 	/**
@@ -747,7 +745,8 @@ public class Font implements Comparable {
 	 * @return a <CODE>Font</CODE>
 	 */
 	public Font difference(Font font) {
-		if (font == null) return this;
+		if (font == null)
+			return this;
 		// size
 		float dSize = font.size;
 		if (dSize == UNDEFINED) {
@@ -780,8 +779,7 @@ public class Font implements Comparable {
 			if (dStyle == style1) {
 				return new Font(this.baseFont, dSize, dStyle, dColor);
 			} else {
-				return FontFactory.getFont(this.getFamilyname(), dSize, dStyle,
-						dColor);
+				return FontFactory.getFont(this.getFamilyname(), dSize, dStyle, dColor);
 			}
 		}
 		return new Font(this.family, dSize, dStyle, dColor);

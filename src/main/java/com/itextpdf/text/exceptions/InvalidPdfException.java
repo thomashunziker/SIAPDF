@@ -52,8 +52,9 @@ package com.itextpdf.text.exceptions;
 import java.io.IOException;
 
 /**
- * Typed exception used when opening an existing PDF document.
- * Gets thrown when the document isn't a valid PDF document.
+ * Typed exception used when opening an existing PDF document. Gets thrown when
+ * the document isn't a valid PDF document.
+ * 
  * @since 2.1.5
  */
 public class InvalidPdfException extends IOException {
@@ -63,7 +64,10 @@ public class InvalidPdfException extends IOException {
 
 	/**
 	 * Creates an instance of a NoPdfException.
-	 * @param	message	the reason why the document isn't a PDF document according to iText.
+	 * 
+	 * @param message
+	 *            the reason why the document isn't a PDF document according to
+	 *            iText.
 	 */
 	public InvalidPdfException(String message) {
 		super(message);

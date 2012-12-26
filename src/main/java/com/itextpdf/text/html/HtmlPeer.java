@@ -106,6 +106,5 @@ public class HtmlPeer extends XmlPeer {
 			}
 		}
 		return attributes;
-    }
+	}
 }
-

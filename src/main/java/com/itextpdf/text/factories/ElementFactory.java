@@ -79,7 +79,6 @@ import com.itextpdf.text.Utilities;
 import com.itextpdf.text.error_messages.MessageLocalization;
 import com.itextpdf.text.html.Markup;
 
-
 /**
  * This class is able to create Element objects based on a list of properties.
  */
@@ -87,6 +86,7 @@ public class ElementFactory {
 
 	/**
 	 * Creates a Chunk object based on a list of properties.
+	 * 
 	 * @param attributes
 	 * @return a Chunk
 	 */
@@ -110,8 +110,7 @@ public class ElementFactory {
 			if (page != null) {
 				chunk.setRemoteGoto(value, Integer.parseInt(page));
 			} else {
-				String destination = attributes
-						.getProperty(ElementTags.DESTINATION);
+				String destination = attributes.getProperty(ElementTags.DESTINATION);
 				if (destination != null) {
 					chunk.setRemoteGoto(value, destination);
 				}
@@ -127,8 +126,7 @@ public class ElementFactory {
 		}
 		value = attributes.getProperty(Markup.CSS_KEY_VERTICALALIGN);
 		if (value != null && value.endsWith("%")) {
-			float p = Float.parseFloat(value.substring(0, value.length() - 1)
-					+ "f") / 100f;
+			float p = Float.parseFloat(value.substring(0, value.length() - 1) + "f") / 100f;
 			chunk.setTextRise(p * chunk.getFont().getSize());
 		}
 		value = attributes.getProperty(ElementTags.GENERICTAG);
@@ -144,6 +142,7 @@ public class ElementFactory {
 
 	/**
 	 * Creates a Phrase object based on a list of properties.
+	 * 
 	 * @param attributes
 	 * @return a Phrase
 	 */
@@ -157,8 +156,7 @@ public class ElementFactory {
 		}
 		value = attributes.getProperty(Markup.CSS_KEY_LINEHEIGHT);
 		if (value != null) {
-			phrase.setLeading(Markup.parseLength(value,
-					Markup.DEFAULT_FONT_SIZE));
+			phrase.setLeading(Markup.parseLength(value, Markup.DEFAULT_FONT_SIZE));
 		}
 		value = attributes.getProperty(ElementTags.ITEXT);
 		if (value != null) {
@@ -173,6 +171,7 @@ public class ElementFactory {
 
 	/**
 	 * Creates an Anchor object based on a list of properties.
+	 * 
 	 * @param attributes
 	 * @return an Anchor
 	 */
@@ -192,6 +191,7 @@ public class ElementFactory {
 
 	/**
 	 * Creates a Paragraph object based on a list of properties.
+	 * 
 	 * @param attributes
 	 * @return a Paragraph
 	 */
@@ -215,6 +215,7 @@ public class ElementFactory {
 
 	/**
 	 * Creates a ListItem object based on a list of properties.
+	 * 
 	 * @param attributes
 	 * @return a ListItem
 	 */
@@ -225,22 +226,18 @@ public class ElementFactory {
 
 	/**
 	 * Creates a List object based on a list of properties.
+	 * 
 	 * @param attributes
 	 * @return the List
 	 */
 	public static List getList(Properties attributes) {
 		List list = new List();
 
-		list.setNumbered(Utilities.checkTrueOrFalse(attributes,
-				ElementTags.NUMBERED));
-		list.setLettered(Utilities.checkTrueOrFalse(attributes,
-				ElementTags.LETTERED));
-		list.setLowercase(Utilities.checkTrueOrFalse(attributes,
-				ElementTags.LOWERCASE));
-		list.setAutoindent(Utilities.checkTrueOrFalse(attributes,
-				ElementTags.AUTO_INDENT_ITEMS));
-		list.setAlignindent(Utilities.checkTrueOrFalse(attributes,
-				ElementTags.ALIGN_INDENTATION_ITEMS));
+		list.setNumbered(Utilities.checkTrueOrFalse(attributes, ElementTags.NUMBERED));
+		list.setLettered(Utilities.checkTrueOrFalse(attributes, ElementTags.LETTERED));
+		list.setLowercase(Utilities.checkTrueOrFalse(attributes, ElementTags.LOWERCASE));
+		list.setAutoindent(Utilities.checkTrueOrFalse(attributes, ElementTags.AUTO_INDENT_ITEMS));
+		list.setAlignindent(Utilities.checkTrueOrFalse(attributes, ElementTags.ALIGN_INDENTATION_ITEMS));
 
 		String value;
 
@@ -256,9 +253,7 @@ public class ElementFactory {
 
 		value = attributes.getProperty(ElementTags.LISTSYMBOL);
 		if (value != null) {
-			list
-					.setListSymbol(new Chunk(value, FontFactory
-							.getFont(attributes)));
+			list.setListSymbol(new Chunk(value, FontFactory.getFont(attributes)));
 		}
 
 		value = attributes.getProperty(ElementTags.INDENTATIONLEFT);
@@ -281,6 +276,7 @@ public class ElementFactory {
 
 	/**
 	 * Creates a Cell object based on a list of properties.
+	 * 
 	 * @param attributes
 	 * @return a Cell
 	 */
@@ -288,10 +284,8 @@ public class ElementFactory {
 		Cell cell = new Cell();
 		String value;
 
-		cell.setHorizontalAlignment(attributes
-				.getProperty(ElementTags.HORIZONTALALIGN));
-		cell.setVerticalAlignment(attributes
-				.getProperty(ElementTags.VERTICALALIGN));
+		cell.setHorizontalAlignment(attributes.getProperty(ElementTags.HORIZONTALALIGN));
+		cell.setVerticalAlignment(attributes.getProperty(ElementTags.VERTICALALIGN));
 
 		value = attributes.getProperty(ElementTags.WIDTH);
 		if (value != null) {
@@ -309,8 +303,7 @@ public class ElementFactory {
 		if (value != null) {
 			cell.setLeading(Float.parseFloat(value + "f"));
 		}
-		cell.setHeader(Utilities.checkTrueOrFalse(attributes,
-				ElementTags.HEADER));
+		cell.setHeader(Utilities.checkTrueOrFalse(attributes, ElementTags.HEADER));
 		if (Utilities.checkTrueOrFalse(attributes, ElementTags.NOWRAP)) {
 			cell.setMaxLines(1);
 		}
@@ -320,6 +313,7 @@ public class ElementFactory {
 
 	/**
 	 * Creates an Table object based on a list of properties.
+	 * 
 	 * @param attributes
 	 * @return a Table
 	 */
@@ -378,20 +372,15 @@ public class ElementFactory {
 			value = attributes.getProperty(ElementTags.WIDTH);
 			if (value != null) {
 				if (value.endsWith("%"))
-					table.setWidth(Float.parseFloat(value.substring(0, value
-							.length() - 1)
-							+ "f"));
+					table.setWidth(Float.parseFloat(value.substring(0, value.length() - 1) + "f"));
 				else {
 					table.setWidth(Float.parseFloat(value + "f"));
 					table.setLocked(true);
 				}
 			}
-			table.setTableFitsPage(Utilities.checkTrueOrFalse(attributes,
-					ElementTags.TABLEFITSPAGE));
-			table.setCellsFitPage(Utilities.checkTrueOrFalse(attributes,
-					ElementTags.CELLSFITPAGE));
-			table.setConvert2pdfptable(Utilities.checkTrueOrFalse(attributes,
-					ElementTags.CONVERT2PDFP));
+			table.setTableFitsPage(Utilities.checkTrueOrFalse(attributes, ElementTags.TABLEFITSPAGE));
+			table.setCellsFitPage(Utilities.checkTrueOrFalse(attributes, ElementTags.CELLSFITPAGE));
+			table.setConvert2pdfptable(Utilities.checkTrueOrFalse(attributes, ElementTags.CONVERT2PDFP));
 
 			setRectangleProperties(table, attributes);
 			return table;
@@ -403,8 +392,7 @@ public class ElementFactory {
 	/**
 	 * Sets some Rectangle properties (for a Cell, Table,...).
 	 */
-	private static void setRectangleProperties(Rectangle rect,
-			Properties attributes) {
+	private static void setRectangleProperties(Rectangle rect, Properties attributes) {
 		String value;
 		value = attributes.getProperty(ElementTags.BORDERWIDTH);
 		if (value != null) {
@@ -440,8 +428,7 @@ public class ElementFactory {
 				blue = Integer.parseInt(b);
 			rect.setBorderColor(new Color(red, green, blue));
 		} else {
-			rect.setBorderColor(Markup.decodeColor(attributes
-					.getProperty(ElementTags.BORDERCOLOR)));
+			rect.setBorderColor(Markup.decodeColor(attributes.getProperty(ElementTags.BORDERCOLOR)));
 		}
 		r = (String) attributes.remove(ElementTags.BGRED);
 		g = (String) attributes.remove(ElementTags.BGGREEN);
@@ -470,6 +457,7 @@ public class ElementFactory {
 
 	/**
 	 * Creates a ChapterAutoNumber object based on a list of properties.
+	 * 
 	 * @param attributes
 	 * @return a Chapter
 	 */
@@ -481,6 +469,7 @@ public class ElementFactory {
 
 	/**
 	 * Creates a Section object based on a list of properties.
+	 * 
 	 * @param attributes
 	 * @return a Section
 	 */
@@ -492,10 +481,10 @@ public class ElementFactory {
 
 	/**
 	 * Helper method to create a Chapter/Section object.
+	 * 
 	 * @param attributes
 	 */
-	private static void setSectionParameters(Section section,
-			Properties attributes) {
+	private static void setSectionParameters(Section section, Properties attributes) {
 		String value;
 		value = attributes.getProperty(ElementTags.NUMBERDEPTH);
 		if (value != null) {
@@ -517,11 +506,11 @@ public class ElementFactory {
 
 	/**
 	 * Creates an Image object based on a list of properties.
+	 * 
 	 * @param attributes
 	 * @return an Image
 	 */
-	public static Image getImage(Properties attributes)
-			throws BadElementException, MalformedURLException, IOException {
+	public static Image getImage(Properties attributes) throws BadElementException, MalformedURLException, IOException {
 		String value;
 
 		value = attributes.getProperty(ElementTags.URL);
@@ -539,11 +528,9 @@ public class ElementFactory {
 			else if (ElementTags.ALIGN_MIDDLE.equalsIgnoreCase(value))
 				align |= Image.MIDDLE;
 		}
-		if ("true".equalsIgnoreCase(attributes
-				.getProperty(ElementTags.UNDERLYING)))
+		if ("true".equalsIgnoreCase(attributes.getProperty(ElementTags.UNDERLYING)))
 			align |= Image.UNDERLYING;
-		if ("true".equalsIgnoreCase(attributes
-				.getProperty(ElementTags.TEXTWRAP)))
+		if ("true".equalsIgnoreCase(attributes.getProperty(ElementTags.TEXTWRAP)))
 			align |= Image.TEXTWRAP;
 		image.setAlignment(align);
 
@@ -555,8 +542,7 @@ public class ElementFactory {
 		String x = attributes.getProperty(ElementTags.ABSOLUTEX);
 		String y = attributes.getProperty(ElementTags.ABSOLUTEY);
 		if ((x != null) && (y != null)) {
-			image.setAbsolutePosition(Float.parseFloat(x + "f"), Float
-					.parseFloat(y + "f"));
+			image.setAbsolutePosition(Float.parseFloat(x + "f"), Float.parseFloat(y + "f"));
 		}
 		value = attributes.getProperty(ElementTags.PLAINWIDTH);
 		if (value != null) {
@@ -575,6 +561,7 @@ public class ElementFactory {
 
 	/**
 	 * Creates an Annotation object based on a list of properties.
+	 * 
 	 * @param attributes
 	 * @return an Annotation
 	 */
@@ -620,8 +607,7 @@ public class ElementFactory {
 				return new Annotation(llx, lly, urx, ury, file, destination);
 			}
 			if (page != null) {
-				return new Annotation(llx, lly, urx, ury, file, Integer
-						.parseInt(page));
+				return new Annotation(llx, lly, urx, ury, file, Integer.parseInt(page));
 			}
 		}
 		return new Annotation("", "", llx, lly, urx, ury);

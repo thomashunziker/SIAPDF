@@ -52,15 +52,20 @@ import com.itextpdf.text.pdf.PdfLiteral;
 
 /**
  * Interface implemented by a series of content operators
+ * 
  * @since 2.1.4
  */
 public interface ContentOperator {
-    /**
-     * Invokes a content operator.
-     * @param processor	the processor that is dealing with the PDF content
-     * @param operator	the literal PDF syntax of the operator
-     * @param operands	the operands that come with the operator
-     */
-    public void invoke(PdfContentStreamProcessor processor, PdfLiteral operator, ArrayList operands);
+	/**
+	 * Invokes a content operator.
+	 * 
+	 * @param processor
+	 *            the processor that is dealing with the PDF content
+	 * @param operator
+	 *            the literal PDF syntax of the operator
+	 * @param operands
+	 *            the operands that come with the operator
+	 */
+	public void invoke(PdfContentStreamProcessor processor, PdfLiteral operator, ArrayList operands);
 
 }

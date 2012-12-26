@@ -58,23 +58,20 @@ import com.itextpdf.text.Document;
 public class ToolboxAvailable {
 
 	/**
-	 * Checks if the toolbox if available.
-	 * If it is, the toolbox is started.
-	 * If it isn't, an error message is shown.
+	 * Checks if the toolbox if available. If it is, the toolbox is started. If
+	 * it isn't, an error message is shown.
 	 */
 	public static void main(String[] args) {
-	    if (GraphicsEnvironment.isHeadless()) {
-	        System.out.println(Document.getVersion() + " Toolbox error: headless display");
-	    } else
-		try {
-			Class c = Class.forName("com.itextpdf.toolbox.Toolbox");
-			Method toolboxMain = c.getMethod("main", new Class[] {args.getClass()});
-			toolboxMain.invoke(null, new Object[] {args} );
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null,
-					"You need the iText-toolbox.jar with class com.itextpdf.toolbox.Toolbox to use the iText Toolbox.",
-					Document.getVersion() + " Toolbox error",
-					JOptionPane.ERROR_MESSAGE);
-		}
+		if (GraphicsEnvironment.isHeadless()) {
+			System.out.println(Document.getVersion() + " Toolbox error: headless display");
+		} else
+			try {
+				Class c = Class.forName("com.itextpdf.toolbox.Toolbox");
+				Method toolboxMain = c.getMethod("main", new Class[] { args.getClass() });
+				toolboxMain.invoke(null, new Object[] { args });
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null, "You need the iText-toolbox.jar with class com.itextpdf.toolbox.Toolbox to use the iText Toolbox.",
+						Document.getVersion() + " Toolbox error", JOptionPane.ERROR_MESSAGE);
+			}
 	}
 }

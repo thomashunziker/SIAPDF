@@ -48,10 +48,11 @@
 package com.itextpdf.text.html.simpleparser;
 
 import com.itextpdf.text.Paragraph;
+
 /**
- *
- * @author  psoares
+ * 
+ * @author psoares
  */
 public interface ALink {
-    boolean process(Paragraph current, ChainedProperties cprops);
+	boolean process(Paragraph current, ChainedProperties cprops);
 }

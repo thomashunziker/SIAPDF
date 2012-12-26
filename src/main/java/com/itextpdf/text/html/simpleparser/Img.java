@@ -53,9 +53,9 @@ import com.itextpdf.text.DocListener;
 import com.itextpdf.text.Image;
 
 /**
- *
- * @author  psoares
+ * 
+ * @author psoares
  */
 public interface Img {
-    boolean process(Image img, HashMap h, ChainedProperties cprops, DocListener doc);
+	boolean process(Image img, HashMap h, ChainedProperties cprops, DocListener doc);
 }

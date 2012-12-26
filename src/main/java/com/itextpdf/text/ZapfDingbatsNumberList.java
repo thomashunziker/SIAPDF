@@ -48,7 +48,8 @@ package com.itextpdf.text;
 
 /**
  * 
- * A special-version of <CODE>LIST</CODE> which use zapfdingbats-numbers (1..10).
+ * A special-version of <CODE>LIST</CODE> which use zapfdingbats-numbers
+ * (1..10).
  * 
  * @see com.itextpdf.text.List
  * @author Michael Niedermair and Bruno Lowagie
@@ -63,7 +64,9 @@ public class ZapfDingbatsNumberList extends List {
 
 	/**
 	 * Creates a ZapdDingbatsNumberList
-	 * @param type the type of list
+	 * 
+	 * @param type
+	 *            the type of list
 	 */
 	public ZapfDingbatsNumberList(int type) {
 		super(true);
@@ -75,8 +78,11 @@ public class ZapfDingbatsNumberList extends List {
 
 	/**
 	 * Creates a ZapdDingbatsNumberList
-	 * @param type the type of list
-	 * @param symbolIndent	indent
+	 * 
+	 * @param type
+	 *            the type of list
+	 * @param symbolIndent
+	 *            indent
 	 */
 	public ZapfDingbatsNumberList(int type, int symbolIndent) {
 		super(true, symbolIndent);
@@ -87,7 +93,7 @@ public class ZapfDingbatsNumberList extends List {
 	}
 
 	/**
-	 * set the type 
+	 * set the type
 	 * 
 	 * @param type
 	 */
@@ -97,8 +103,8 @@ public class ZapfDingbatsNumberList extends List {
 
 	/**
 	 * get the type
-	 *
-	 * @return	char-number
+	 * 
+	 * @return char-number
 	 */
 	public int getType() {
 		return type;
@@ -106,26 +112,27 @@ public class ZapfDingbatsNumberList extends List {
 
 	/**
 	 * Adds an <CODE>Object</CODE> to the <CODE>List</CODE>.
-	 *
-	 * @param	o	the object to add.
+	 * 
+	 * @param o
+	 *            the object to add.
 	 * @return true if adding the object succeeded
 	 */
 	public boolean add(Object o) {
 		if (o instanceof ListItem) {
 			ListItem item = (ListItem) o;
 			Chunk chunk = new Chunk(preSymbol, symbol.getFont());
-			switch (type ) {
-				case 0:
-					chunk.append(String.valueOf((char)(first + list.size() + 171)));
-					break;
-				case 1:
-					chunk.append(String.valueOf((char)(first + list.size() + 181)));
-					break;
-				case 2:
-					chunk.append(String.valueOf((char)(first + list.size() + 191)));
-					break;
-				default:
-					chunk.append(String.valueOf((char)(first + list.size() + 201)));
+			switch (type) {
+			case 0:
+				chunk.append(String.valueOf((char) (first + list.size() + 171)));
+				break;
+			case 1:
+				chunk.append(String.valueOf((char) (first + list.size() + 181)));
+				break;
+			case 2:
+				chunk.append(String.valueOf((char) (first + list.size() + 191)));
+				break;
+			default:
+				chunk.append(String.valueOf((char) (first + list.size() + 201)));
 			}
 			chunk.append(postSymbol);
 			item.setListSymbol(chunk);

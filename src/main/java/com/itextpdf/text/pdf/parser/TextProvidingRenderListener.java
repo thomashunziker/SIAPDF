@@ -9,9 +9,10 @@ package com.itextpdf.text.pdf.parser;
  * Defines an interface for {@link RenderListener}s that can return text
  */
 public interface TextProvidingRenderListener extends RenderListener {
-    /**
-     * Returns the result so far.
-     * @return  a String with the resulting text.
-     */
-    public String getResultantText();
+	/**
+	 * Returns the result so far.
+	 * 
+	 * @return a String with the resulting text.
+	 */
+	public String getResultantText();
 }

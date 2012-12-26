@@ -64,20 +64,23 @@ public class XmpArray extends ArrayList {
 	public static final String ORDERED = "rdf:Seq";
 	/** An array with alternatives. */
 	public static final String ALTERNATIVE = "rdf:Alt";
-	
+
 	/** the type of array. */
 	protected String type;
-	
+
 	/**
 	 * Creates an XmpArray.
-	 * @param type the type of array: UNORDERED, ORDERED or ALTERNATIVE.
+	 * 
+	 * @param type
+	 *            the type of array: UNORDERED, ORDERED or ALTERNATIVE.
 	 */
 	public XmpArray(String type) {
 		this.type = type;
 	}
-	
+
 	/**
 	 * Returns the String representation of the XmpArray.
+	 * 
 	 * @return a String representation
 	 */
 	public String toString() {
@@ -85,7 +88,7 @@ public class XmpArray extends ArrayList {
 		buf.append(type);
 		buf.append('>');
 		String s;
-		for (Iterator i = iterator(); i.hasNext(); ) {
+		for (Iterator i = iterator(); i.hasNext();) {
 			s = (String) i.next();
 			buf.append("<rdf:li>");
 			buf.append(XmpSchema.escape(s));

@@ -109,8 +109,11 @@ public class HTMLWorker implements SimpleXMLDocHandler, DocListener {
 
 	private FactoryProperties factoryProperties = new FactoryProperties();
 
-	/** Creates a new instance of HTMLWorker
-	 * @param document A class that implements <CODE>DocListener</CODE>
+	/**
+	 * Creates a new instance of HTMLWorker
+	 * 
+	 * @param document
+	 *            A class that implements <CODE>DocListener</CODE>
 	 * */
 	public HTMLWorker(DocListener document) {
 		this.document = document;
@@ -141,13 +144,11 @@ public class HTMLWorker implements SimpleXMLDocHandler, DocListener {
 		SimpleXMLParser.parse(this, null, reader, true);
 	}
 
-	public static ArrayList parseToList(Reader reader, StyleSheet style)
-			throws IOException {
+	public static ArrayList parseToList(Reader reader, StyleSheet style) throws IOException {
 		return parseToList(reader, style, null);
 	}
 
-	public static ArrayList parseToList(Reader reader, StyleSheet style,
-			HashMap interfaceProps) throws IOException {
+	public static ArrayList parseToList(Reader reader, StyleSheet style, HashMap interfaceProps) throws IOException {
 		HTMLWorker worker = new HTMLWorker(null);
 		if (style != null)
 			worker.style = style;
@@ -202,14 +203,14 @@ public class HTMLWorker implements SimpleXMLDocHandler, DocListener {
 				if (currentParagraph == null) {
 					currentParagraph = new Paragraph();
 				}
-				currentParagraph.add(factoryProperties
-						.createChunk("\n", cprops));
+				currentParagraph.add(factoryProperties.createChunk("\n", cprops));
 				return;
 			}
 			if (tag.equals(HtmlTags.HORIZONTALRULE)) {
 				// Attempting to duplicate the behavior seen on Firefox with
 				// http://www.w3schools.com/tags/tryit.asp?filename=tryhtml_hr_test
-				// where an initial break is only inserted when the preceding element doesn't
+				// where an initial break is only inserted when the preceding
+				// element doesn't
 				// end with a break, but a trailing break is always inserted.
 				boolean addLeadingBreak = true;
 				if (currentParagraph == null) {
@@ -218,15 +219,14 @@ public class HTMLWorker implements SimpleXMLDocHandler, DocListener {
 				}
 				if (addLeadingBreak) { // Not a new paragraph
 					int numChunks = currentParagraph.getChunks().size();
-					if (numChunks == 0 ||
-							((Chunk)(currentParagraph.getChunks().get(numChunks - 1))).getContent().endsWith("\n"))
+					if (numChunks == 0 || ((Chunk) (currentParagraph.getChunks().get(numChunks - 1))).getContent().endsWith("\n"))
 						addLeadingBreak = false;
 				}
 				String align = (String) h.get("align");
 				int hrAlign = Element.ALIGN_CENTER;
 				if (align != null) {
 					if (align.equalsIgnoreCase("left"))
-						hrAlign = Element.ALIGN_LEFT; 
+						hrAlign = Element.ALIGN_LEFT;
 					if (align.equalsIgnoreCase("right"))
 						hrAlign = Element.ALIGN_RIGHT;
 				}
@@ -234,7 +234,8 @@ public class HTMLWorker implements SimpleXMLDocHandler, DocListener {
 				float hrWidth = 1;
 				if (width != null) {
 					float tmpWidth = Markup.parseLength(width, Markup.DEFAULT_FONT_SIZE);
-					if (tmpWidth > 0) hrWidth = tmpWidth;
+					if (tmpWidth > 0)
+						hrWidth = tmpWidth;
 					if (!width.endsWith("%"))
 						hrWidth = 100; // Treat a pixel width as 100% for now.
 				}
@@ -247,7 +248,7 @@ public class HTMLWorker implements SimpleXMLDocHandler, DocListener {
 				}
 				if (addLeadingBreak)
 					currentParagraph.add(Chunk.NEWLINE);
-				currentParagraph.add(new LineSeparator(hrSize, hrWidth, null, hrAlign, currentParagraph.getLeading()/2));
+				currentParagraph.add(new LineSeparator(hrSize, hrWidth, null, hrAlign, currentParagraph.getLeading() / 2));
 				currentParagraph.add(Chunk.NEWLINE);
 				return;
 			}
@@ -262,21 +263,19 @@ public class HTMLWorker implements SimpleXMLDocHandler, DocListener {
 				cprops.addToChain(tag, h);
 				Image img = null;
 				if (interfaceProps != null) {
-					ImageProvider ip = (ImageProvider) interfaceProps
-							.get("img_provider");
+					ImageProvider ip = (ImageProvider) interfaceProps.get("img_provider");
 					if (ip != null)
 						img = ip.getImage(src, h, cprops, document);
 					if (img == null) {
-						HashMap images = (HashMap) interfaceProps
-								.get("img_static");
+						HashMap images = (HashMap) interfaceProps.get("img_static");
 						if (images != null) {
 							Image tim = (Image) images.get(src);
 							if (tim != null)
 								img = Image.getInstance(tim);
 						} else {
-							if (!src.startsWith("http")) { // relative src references only
-								String baseurl = (String) interfaceProps
-										.get("img_baseurl");
+							if (!src.startsWith("http")) { // relative src
+															// references only
+								String baseurl = (String) interfaceProps.get("img_baseurl");
 								if (baseurl != null) {
 									src = baseurl + src;
 									img = Image.getInstance(src);
@@ -303,23 +302,18 @@ public class HTMLWorker implements SimpleXMLDocHandler, DocListener {
 					img.setSpacingBefore(Float.parseFloat(before));
 				if (after != null)
 					img.setSpacingAfter(Float.parseFloat(after));
-				float actualFontSize = Markup.parseLength(cprops
-						.getProperty(ElementTags.SIZE),
-						Markup.DEFAULT_FONT_SIZE);
+				float actualFontSize = Markup.parseLength(cprops.getProperty(ElementTags.SIZE), Markup.DEFAULT_FONT_SIZE);
 				if (actualFontSize <= 0f)
 					actualFontSize = Markup.DEFAULT_FONT_SIZE;
 				float widthInPoints = Markup.parseLength(width, actualFontSize);
-				float heightInPoints = Markup.parseLength(height,
-						actualFontSize);
+				float heightInPoints = Markup.parseLength(height, actualFontSize);
 				if (widthInPoints > 0 && heightInPoints > 0) {
 					img.scaleAbsolute(widthInPoints, heightInPoints);
 				} else if (widthInPoints > 0) {
-					heightInPoints = img.getHeight() * widthInPoints
-							/ img.getWidth();
+					heightInPoints = img.getHeight() * widthInPoints / img.getWidth();
 					img.scaleAbsolute(widthInPoints, heightInPoints);
 				} else if (heightInPoints > 0) {
-					widthInPoints = img.getWidth() * heightInPoints
-							/ img.getHeight();
+					widthInPoints = img.getWidth() * heightInPoints / img.getHeight();
 					img.scaleAbsolute(widthInPoints, heightInPoints);
 				}
 				img.setWidthPercentage(0);
@@ -344,16 +338,14 @@ public class HTMLWorker implements SimpleXMLDocHandler, DocListener {
 				} else {
 					cprops.removeChain(tag);
 					if (currentParagraph == null) {
-						currentParagraph = FactoryProperties
-								.createParagraph(cprops);
+						currentParagraph = FactoryProperties.createParagraph(cprops);
 					}
 					currentParagraph.add(new Chunk(img, 0, 0));
 				}
 				return;
 			}
 			endElement("p");
-			if (tag.equals("h1") || tag.equals("h2") || tag.equals("h3")
-					|| tag.equals("h4") || tag.equals("h5") || tag.equals("h6")) {
+			if (tag.equals("h1") || tag.equals("h2") || tag.equals("h3") || tag.equals("h4") || tag.equals("h5") || tag.equals("h6")) {
 				if (!h.containsKey(ElementTags.SIZE)) {
 					int v = 7 - Integer.parseInt(tag.substring(1));
 					h.put(ElementTags.SIZE, Integer.toString(v));
@@ -367,9 +359,9 @@ public class HTMLWorker implements SimpleXMLDocHandler, DocListener {
 				skipText = true;
 				cprops.addToChain(tag, h);
 				com.itextpdf.text.List list = new com.itextpdf.text.List(false);
-				try{
+				try {
 					list.setIndentationLeft(new Float(cprops.getProperty("indent")).floatValue());
-				}catch (Exception e) {
+				} catch (Exception e) {
 					list.setAutoindent(true);
 				}
 				list.setListSymbol("\u2022");
@@ -382,9 +374,9 @@ public class HTMLWorker implements SimpleXMLDocHandler, DocListener {
 				skipText = true;
 				cprops.addToChain(tag, h);
 				com.itextpdf.text.List list = new com.itextpdf.text.List(true);
-				try{
+				try {
 					list.setIndentationLeft(new Float(cprops.getProperty("indent")).floatValue());
-				}catch (Exception e) {
+				} catch (Exception e) {
 					list.setAutoindent(true);
 				}
 				stack.push(list);
@@ -501,8 +493,7 @@ public class HTMLWorker implements SimpleXMLDocHandler, DocListener {
 				}
 			}
 			currentParagraph = null;
-			if (tag.equals(HtmlTags.UNORDEREDLIST)
-					|| tag.equals(HtmlTags.ORDEREDLIST)) {
+			if (tag.equals(HtmlTags.UNORDEREDLIST) || tag.equals(HtmlTags.ORDEREDLIST)) {
 				if (pendingLI)
 					endElement(HtmlTags.LISTITEM);
 				skipText = false;
@@ -544,8 +535,7 @@ public class HTMLWorker implements SimpleXMLDocHandler, DocListener {
 				((com.itextpdf.text.List) list).add(item);
 				ArrayList cks = item.getChunks();
 				if (!cks.isEmpty())
-					item.getListSymbol()
-							.setFont(((Chunk) cks.get(0)).getFont());
+					item.getListSymbol().setFont(((Chunk) cks.get(0)).getFont());
 				stack.push(list);
 				return;
 			}
@@ -562,8 +552,7 @@ public class HTMLWorker implements SimpleXMLDocHandler, DocListener {
 				cprops.removeChain(tag);
 				return;
 			}
-			if (tag.equals("h1") || tag.equals("h2") || tag.equals("h3")
-					|| tag.equals("h4") || tag.equals("h5") || tag.equals("h6")) {
+			if (tag.equals("h1") || tag.equals("h2") || tag.equals("h3") || tag.equals("h4") || tag.equals("h5") || tag.equals("h6")) {
 				cprops.removeChain(tag);
 				return;
 			}
@@ -705,15 +694,14 @@ public class HTMLWorker implements SimpleXMLDocHandler, DocListener {
 	}
 
 	/**
-     * @see com.itextpdf.text.DocListener#setMarginMirroring(boolean)
-	 * @since	2.1.6
+	 * @see com.itextpdf.text.DocListener#setMarginMirroring(boolean)
+	 * @since 2.1.6
 	 */
 	public boolean setMarginMirroringTopBottom(boolean marginMirroring) {
 		return false;
 	}
 
-	public boolean setMargins(float marginLeft, float marginRight,
-			float marginTop, float marginBottom) {
+	public boolean setMargins(float marginLeft, float marginRight, float marginTop, float marginBottom) {
 		return true;
 	}
 

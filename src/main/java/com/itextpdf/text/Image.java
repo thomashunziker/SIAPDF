@@ -80,7 +80,6 @@ import com.itextpdf.text.pdf.codec.JBIG2Image;
 import com.itextpdf.text.pdf.codec.PngImage;
 import com.itextpdf.text.pdf.codec.TiffImage;
 
-
 /**
  * An <CODE>Image</CODE> is the representation of a graphic element (JPEG, PNG
  * or GIF) that has to be inserted into the document
@@ -157,18 +156,19 @@ public abstract class Image extends Rectangle {
 	public static final int ORIGINAL_WMF = 6;
 
 	/** type of image */
-    public static final int ORIGINAL_PS = 7;
+	public static final int ORIGINAL_PS = 7;
 
 	/** type of image */
 	public static final int ORIGINAL_JPEG2000 = 8;
 
 	/**
 	 * type of image
-	 * @since	2.1.5
+	 * 
+	 * @since 2.1.5
 	 */
 	public static final int ORIGINAL_JBIG2 = 9;
-	
-    // member variables
+
+	// member variables
 
 	/** The image type. */
 	protected int type;
@@ -181,7 +181,7 @@ public abstract class Image extends Rectangle {
 
 	/** The bits per component of the raw image. It also flags a CCITT image. */
 	protected int bpc = 1;
-	
+
 	/** The template to be treated as an image. */
 	protected PdfTemplate template[] = new PdfTemplate[1];
 
@@ -208,18 +208,19 @@ public abstract class Image extends Rectangle {
 
 	/** This is the original height of the image taking rotation into account. */
 	protected float scaledHeight;
-	
-    /**
-     * The compression level of the content streams.
-     * @since	2.1.3
-     */
-    protected int compressionLevel = PdfStream.DEFAULT_COMPRESSION;
+
+	/**
+	 * The compression level of the content streams.
+	 * 
+	 * @since 2.1.3
+	 */
+	protected int compressionLevel = PdfStream.DEFAULT_COMPRESSION;
 
 	/** an iText attributed unique id for this image. */
 	protected Long mySerialId = getSerialId();
 
 	// image from file or URL
-	
+
 	/**
 	 * Constructs an <CODE>Image</CODE> -object, using an <VAR>url </VAR>.
 	 * 
@@ -243,8 +244,7 @@ public abstract class Image extends Rectangle {
 	 * @throws MalformedURLException
 	 * @throws IOException
 	 */
-	public static Image getInstance(URL url) throws BadElementException,
-			MalformedURLException, IOException {
+	public static Image getInstance(URL url) throws BadElementException, MalformedURLException, IOException {
 		InputStream is = null;
 		try {
 			is = url.openStream();
@@ -274,23 +274,21 @@ public abstract class Image extends Rectangle {
 			if (c1 == 0xff && c2 == 0x4f && c3 == 0xff && c4 == 0x51) {
 				return new Jpeg2000(url);
 			}
-			if (c1 == PngImage.PNGID[0] && c2 == PngImage.PNGID[1]
-					&& c3 == PngImage.PNGID[2] && c4 == PngImage.PNGID[3]) {
+			if (c1 == PngImage.PNGID[0] && c2 == PngImage.PNGID[1] && c3 == PngImage.PNGID[2] && c4 == PngImage.PNGID[3]) {
 				return PngImage.getImage(url);
 			}
 			if (c1 == 0xD7 && c2 == 0xCD) {
 				return new ImgWMF(url);
 			}
 			if (c1 == 'B' && c2 == 'M') {
-				return  BmpImage.getImage(url);
+				return BmpImage.getImage(url);
 			}
-			if ((c1 == 'M' && c2 == 'M' && c3 == 0 && c4 == 42)
-					|| (c1 == 'I' && c2 == 'I' && c3 == 42 && c4 == 0)) {
+			if ((c1 == 'M' && c2 == 'M' && c3 == 0 && c4 == 42) || (c1 == 'I' && c2 == 'I' && c3 == 42 && c4 == 0)) {
 				RandomAccessFileOrArray ra = null;
 				try {
 					if (url.getProtocol().equals("file")) {
 						String file = url.getFile();
-                        file = Utilities.unEscapeURL(file);
+						file = Utilities.unEscapeURL(file);
 						ra = new RandomAccessFileOrArray(file);
 					} else
 						ra = new RandomAccessFileOrArray(url);
@@ -303,26 +301,24 @@ public abstract class Image extends Rectangle {
 				}
 
 			}
-			if ( c1 == 0x97 && c2 == 'J' && c3 == 'B' && c4 == '2' &&
-					c5 == '\r' && c6 == '\n' && c7 == 0x1a && c8 == '\n' ) {
+			if (c1 == 0x97 && c2 == 'J' && c3 == 'B' && c4 == '2' && c5 == '\r' && c6 == '\n' && c7 == 0x1a && c8 == '\n') {
 				RandomAccessFileOrArray ra = null;
 				try {
 					if (url.getProtocol().equals("file")) {
 						String file = url.getFile();
 						file = Utilities.unEscapeURL(file);
-			            ra = new RandomAccessFileOrArray(file);
+						ra = new RandomAccessFileOrArray(file);
 					} else
 						ra = new RandomAccessFileOrArray(url);
 					Image img = JBIG2Image.getJbig2Image(ra, 1);
 					img.url = url;
 					return img;
 				} finally {
-						if (ra != null)
-							ra.close();
+					if (ra != null)
+						ra.close();
 				}
 			}
-			throw new IOException(url.toString()
-					+ " is not a recognized imageformat.");
+			throw new IOException(url.toString() + " is not a recognized imageformat.");
 		} finally {
 			if (is != null) {
 				is.close();
@@ -341,11 +337,10 @@ public abstract class Image extends Rectangle {
 	 * @throws MalformedURLException
 	 * @throws IOException
 	 */
-	public static Image getInstance(String filename)
-			throws BadElementException, MalformedURLException, IOException {
+	public static Image getInstance(String filename) throws BadElementException, MalformedURLException, IOException {
 		return getInstance(Utilities.toURL(filename));
 	}
-    
+
 	/**
 	 * gets an instance of an Image
 	 * 
@@ -356,8 +351,7 @@ public abstract class Image extends Rectangle {
 	 * @throws MalformedURLException
 	 * @throws IOException
 	 */
-	public static Image getInstance(byte imgb[]) throws BadElementException,
-			MalformedURLException, IOException {
+	public static Image getInstance(byte imgb[]) throws BadElementException, MalformedURLException, IOException {
 		InputStream is = null;
 		try {
 			is = new java.io.ByteArrayInputStream(imgb);
@@ -381,8 +375,7 @@ public abstract class Image extends Rectangle {
 			if (c1 == 0xff && c2 == 0x4f && c3 == 0xff && c4 == 0x51) {
 				return new Jpeg2000(imgb);
 			}
-			if (c1 == PngImage.PNGID[0] && c2 == PngImage.PNGID[1]
-					&& c3 == PngImage.PNGID[2] && c4 == PngImage.PNGID[3]) {
+			if (c1 == PngImage.PNGID[0] && c2 == PngImage.PNGID[1] && c3 == PngImage.PNGID[2] && c4 == PngImage.PNGID[3]) {
 				return PngImage.getImage(imgb);
 			}
 			if (c1 == 0xD7 && c2 == 0xCD) {
@@ -391,14 +384,13 @@ public abstract class Image extends Rectangle {
 			if (c1 == 'B' && c2 == 'M') {
 				return BmpImage.getImage(imgb);
 			}
-			if ((c1 == 'M' && c2 == 'M' && c3 == 0 && c4 == 42)
-					|| (c1 == 'I' && c2 == 'I' && c3 == 42 && c4 == 0)) {
+			if ((c1 == 'M' && c2 == 'M' && c3 == 0 && c4 == 42) || (c1 == 'I' && c2 == 'I' && c3 == 42 && c4 == 0)) {
 				RandomAccessFileOrArray ra = null;
 				try {
 					ra = new RandomAccessFileOrArray(imgb);
 					Image img = TiffImage.getTiffImage(ra, 1);
-                    if (img.getOriginalData() == null)
-                        img.setOriginalData(imgb);
+					if (img.getOriginalData() == null)
+						img.setOriginalData(imgb);
 					return img;
 				} finally {
 					if (ra != null)
@@ -406,23 +398,25 @@ public abstract class Image extends Rectangle {
 				}
 
 			}
-			if ( c1 == 0x97 && c2 == 'J' && c3 == 'B' && c4 == '2' ) {
+			if (c1 == 0x97 && c2 == 'J' && c3 == 'B' && c4 == '2') {
 				is = new java.io.ByteArrayInputStream(imgb);
 				is.skip(4);
 				int c5 = is.read();
 				int c6 = is.read();
 				int c7 = is.read();
 				int c8 = is.read();
-				if ( c5 == '\r' && c6 == '\n' && c7 == 0x1a && c8 == '\n' ) {
+				if (c5 == '\r' && c6 == '\n' && c7 == 0x1a && c8 == '\n') {
 					int file_header_flags = is.read();
 					int number_of_pages = -1;
-					if ( (file_header_flags & 0x2) == 0x2 ) {
+					if ((file_header_flags & 0x2) == 0x2) {
 						number_of_pages = (is.read() << 24) | (is.read() << 16) | (is.read() << 8) | is.read();
 					}
 					is.close();
-					// a jbig2 file with a file header.  the header is the only way we know here.                                                           
-					// embedded jbig2s don't have a header, have to create them by explicit use of Jbig2Image?
-					// nkerr, 2008-12-05  see also the getInstance(URL)
+					// a jbig2 file with a file header. the header is the only
+					// way we know here.
+					// embedded jbig2s don't have a header, have to create them
+					// by explicit use of Jbig2Image?
+					// nkerr, 2008-12-05 see also the getInstance(URL)
 					RandomAccessFileOrArray ra = null;
 					try {
 						ra = new RandomAccessFileOrArray(imgb);
@@ -461,24 +455,28 @@ public abstract class Image extends Rectangle {
 	 * @throws BadElementException
 	 *             on error
 	 */
-	public static Image getInstance(int width, int height, int components,
-			int bpc, byte data[]) throws BadElementException {
+	public static Image getInstance(int width, int height, int components, int bpc, byte data[]) throws BadElementException {
 		return Image.getInstance(width, height, components, bpc, data, null);
 	}
 
 	/**
 	 * Creates a JBIG2 Image.
-	 * @param	width	the width of the image
-	 * @param	height	the height of the image
-	 * @param	data	the raw image data
-	 * @param	globals	JBIG2 globals
-	 * @since	2.1.5
+	 * 
+	 * @param width
+	 *            the width of the image
+	 * @param height
+	 *            the height of the image
+	 * @param data
+	 *            the raw image data
+	 * @param globals
+	 *            JBIG2 globals
+	 * @since 2.1.5
 	 */
 	public static Image getInstance(int width, int height, byte[] data, byte[] globals) {
 		Image img = new ImgJBIG2(width, height, data, globals);
 		return img;
 	}
-	
+
 	/**
 	 * Creates an Image with CCITT G3 or G4 compression. It assumes that the
 	 * data bytes are already compressed.
@@ -488,8 +486,8 @@ public abstract class Image extends Rectangle {
 	 * @param height
 	 *            the exact height of the image
 	 * @param reverseBits
-	 *            reverses the bits in <code>data</code>. Bit 0 is swapped
-	 *            with bit 7 and so on
+	 *            reverses the bits in <code>data</code>. Bit 0 is swapped with
+	 *            bit 7 and so on
 	 * @param typeCCITT
 	 *            the type of compression in <code>data</code>. It can be
 	 *            CCITTG4, CCITTG31D, CCITTG32D
@@ -503,11 +501,8 @@ public abstract class Image extends Rectangle {
 	 * @throws BadElementException
 	 *             on error
 	 */
-	public static Image getInstance(int width, int height, boolean reverseBits,
-			int typeCCITT, int parameters, byte[] data)
-			throws BadElementException {
-		return Image.getInstance(width, height, reverseBits, typeCCITT,
-				parameters, data, null);
+	public static Image getInstance(int width, int height, boolean reverseBits, int typeCCITT, int parameters, byte[] data) throws BadElementException {
+		return Image.getInstance(width, height, reverseBits, typeCCITT, parameters, data, null);
 	}
 
 	/**
@@ -519,8 +514,8 @@ public abstract class Image extends Rectangle {
 	 * @param height
 	 *            the exact height of the image
 	 * @param reverseBits
-	 *            reverses the bits in <code>data</code>. Bit 0 is swapped
-	 *            with bit 7 and so on
+	 *            reverses the bits in <code>data</code>. Bit 0 is swapped with
+	 *            bit 7 and so on
 	 * @param typeCCITT
 	 *            the type of compression in <code>data</code>. It can be
 	 *            CCITTG4, CCITTG31D, CCITTG32D
@@ -537,13 +532,11 @@ public abstract class Image extends Rectangle {
 	 * @throws BadElementException
 	 *             on error
 	 */
-	public static Image getInstance(int width, int height, boolean reverseBits,
-			int typeCCITT, int parameters, byte[] data, int transparency[])
+	public static Image getInstance(int width, int height, boolean reverseBits, int typeCCITT, int parameters, byte[] data, int transparency[])
 			throws BadElementException {
 		if (transparency != null && transparency.length != 2)
 			throw new BadElementException(MessageLocalization.getComposedMessage("transparency.length.must.be.equal.to.2.with.ccitt.images"));
-		Image img = new ImgCCITT(width, height, reverseBits, typeCCITT,
-				parameters, data);
+		Image img = new ImgCCITT(width, height, reverseBits, typeCCITT, parameters, data);
 		img.transparency = transparency;
 		return img;
 	}
@@ -568,15 +561,12 @@ public abstract class Image extends Rectangle {
 	 * @throws BadElementException
 	 *             on error
 	 */
-	public static Image getInstance(int width, int height, int components,
-			int bpc, byte data[], int transparency[])
-			throws BadElementException {
+	public static Image getInstance(int width, int height, int components, int bpc, byte data[], int transparency[]) throws BadElementException {
 		if (transparency != null && transparency.length != components * 2)
 			throw new BadElementException(MessageLocalization.getComposedMessage("transparency.length.must.be.equal.to.componentes.2"));
 		if (components == 1 && bpc == 1) {
 			byte g4[] = CCITTG4Encoder.compress(data, width, height);
-			return Image.getInstance(width, height, false, Image.CCITTG4,
-					Image.CCITT_BLACKIS1, g4, transparency);
+			return Image.getInstance(width, height, false, Image.CCITTG4, Image.CCITT_BLACKIS1, g4, transparency);
 		}
 		Image img = new ImgRaw(width, height, components, bpc, data);
 		img.transparency = transparency;
@@ -584,7 +574,7 @@ public abstract class Image extends Rectangle {
 	}
 
 	// images from a PdfTemplate
-	
+
 	/**
 	 * gets an instance of an Image
 	 * 
@@ -593,13 +583,12 @@ public abstract class Image extends Rectangle {
 	 * @return an Image object
 	 * @throws BadElementException
 	 */
-	public static Image getInstance(PdfTemplate template)
-			throws BadElementException {
+	public static Image getInstance(PdfTemplate template) throws BadElementException {
 		return new ImgTemplate(template);
 	}
-    
-    // images from a java.awt.Image
-    
+
+	// images from a java.awt.Image
+
 	/**
 	 * Gets an instance of an Image from a java.awt.Image.
 	 * 
@@ -616,18 +605,16 @@ public abstract class Image extends Rectangle {
 	 * @throws IOException
 	 *             on error
 	 */
-	public static Image getInstance(java.awt.Image image, java.awt.Color color,
-			boolean forceBW) throws BadElementException, IOException {
-		
-		if(image instanceof BufferedImage){
+	public static Image getInstance(java.awt.Image image, java.awt.Color color, boolean forceBW) throws BadElementException, IOException {
+
+		if (image instanceof BufferedImage) {
 			BufferedImage bi = (BufferedImage) image;
-			if(bi.getType()==BufferedImage.TYPE_BYTE_BINARY) {
-				forceBW=true;
+			if (bi.getType() == BufferedImage.TYPE_BYTE_BINARY) {
+				forceBW = true;
 			}
 		}
-		
-		java.awt.image.PixelGrabber pg = new java.awt.image.PixelGrabber(image,
-				0, 0, -1, -1, true);
+
+		java.awt.image.PixelGrabber pg = new java.awt.image.PixelGrabber(image, 0, 0, -1, -1, true);
 		try {
 			pg.grabPixels();
 		} catch (InterruptedException e) {
@@ -647,8 +634,7 @@ public abstract class Image extends Rectangle {
 			int size = h * w;
 			int transColor = 1;
 			if (color != null) {
-				transColor = (color.getRed() + color.getGreen()
-						+ color.getBlue() < 384) ? 0 : 1;
+				transColor = (color.getRed() + color.getGreen() + color.getBlue() < 384) ? 0 : 1;
 			}
 			int transparency[] = null;
 			int cbyte = 0x80;
@@ -785,17 +771,17 @@ public abstract class Image extends Rectangle {
 	 * @throws IOException
 	 *             on error
 	 */
-	public static Image getInstance(java.awt.Image image, java.awt.Color color)
-			throws BadElementException, IOException {
+	public static Image getInstance(java.awt.Image image, java.awt.Color color) throws BadElementException, IOException {
 		return Image.getInstance(image, color, false);
 	}
-	
+
 	/**
-	 * Gets an instance of a Image from a java.awt.Image.
-	 * The image is added as a JPEG with a user defined quality.
+	 * Gets an instance of a Image from a java.awt.Image. The image is added as
+	 * a JPEG with a user defined quality.
 	 * 
 	 * @param writer
-	 *            the <CODE>PdfWriter</CODE> object to which the image will be added
+	 *            the <CODE>PdfWriter</CODE> object to which the image will be
+	 *            added
 	 * @param awtImage
 	 *            the <CODE>java.awt.Image</CODE> to convert
 	 * @param quality
@@ -808,98 +794,103 @@ public abstract class Image extends Rectangle {
 	public static Image getInstance(PdfWriter writer, java.awt.Image awtImage, float quality) throws BadElementException, IOException {
 		return getInstance(new PdfContentByte(writer), awtImage, quality);
 	}
-	
-    /**
-     * Gets an instance of a Image from a java.awt.Image.
-     * The image is added as a JPEG with a user defined quality.
-     *
-     * @param cb
-     *            the <CODE>PdfContentByte</CODE> object to which the image will be added
-     * @param awtImage
-     *            the <CODE>java.awt.Image</CODE> to convert
-     * @param quality
-     *            a float value between 0 and 1
-     * @return an object of type <CODE>PdfTemplate</CODE>
-     * @throws BadElementException
-     *             on error
-     * @throws IOException
-     */
-    public static Image getInstance(PdfContentByte cb, java.awt.Image awtImage, float quality) throws BadElementException, IOException {
-        java.awt.image.PixelGrabber pg = new java.awt.image.PixelGrabber(awtImage,
-                0, 0, -1, -1, true);
-        try {
-            pg.grabPixels();
-        } catch (InterruptedException e) {
-            throw new IOException(MessageLocalization.getComposedMessage("java.awt.image.interrupted.waiting.for.pixels"));
-        }
-        if ((pg.getStatus() & java.awt.image.ImageObserver.ABORT) != 0) {
-            throw new IOException(MessageLocalization.getComposedMessage("java.awt.image.fetch.aborted.or.errored"));
-        }
-        int w = pg.getWidth();
-        int h = pg.getHeight();
-        PdfTemplate tp = cb.createTemplate(w, h);
-        Graphics2D g2d = tp.createGraphics(w, h, true, quality);
-        g2d.drawImage(awtImage, 0, 0, null);
-        g2d.dispose();
-        return getInstance(tp);
-    }
 
-    // image from indirect reference
-    
-    /**
-     * Holds value of property directReference.
-     * An image is embedded into a PDF as an Image XObject.
-     * This object is referenced by a PdfIndirectReference object.
-     */
-    private PdfIndirectReference directReference;
-    
-    /**
-     * Getter for property directReference.
-     * @return Value of property directReference.
-     */
-    public PdfIndirectReference getDirectReference() {
-        return this.directReference;
-    }
-    
-    /**
-     * Setter for property directReference.
-     * @param directReference New value of property directReference.
-     */
-    public void setDirectReference(PdfIndirectReference directReference) {
-        this.directReference = directReference;
-    }
-    
-    /**
-     * Reuses an existing image.
-     * @param ref the reference to the image dictionary
-     * @throws BadElementException on error
-     * @return the image
-     */    
-    public static Image getInstance(PRIndirectReference ref) throws BadElementException {
-        PdfDictionary dic = (PdfDictionary)PdfReader.getPdfObjectRelease(ref);
-        int width = ((PdfNumber)PdfReader.getPdfObjectRelease(dic.get(PdfName.WIDTH))).intValue();
-        int height = ((PdfNumber)PdfReader.getPdfObjectRelease(dic.get(PdfName.HEIGHT))).intValue();
-        Image imask = null;
-        PdfObject obj = dic.get(PdfName.SMASK);
-        if (obj != null && obj.isIndirect()) {
-            imask = getInstance((PRIndirectReference)obj);
-        }
-        else {
-            obj = dic.get(PdfName.MASK);
-            if (obj != null && obj.isIndirect()) {
-                PdfObject obj2 = PdfReader.getPdfObjectRelease(obj);
-                if (obj2 instanceof PdfDictionary)
-                    imask = getInstance((PRIndirectReference)obj);
-            }
-        }
-        Image img = new ImgRaw(width, height, 1, 1, null);
-        img.imageMask = imask;
-        img.directReference = ref;
-        return img;
-    }
+	/**
+	 * Gets an instance of a Image from a java.awt.Image. The image is added as
+	 * a JPEG with a user defined quality.
+	 * 
+	 * @param cb
+	 *            the <CODE>PdfContentByte</CODE> object to which the image will
+	 *            be added
+	 * @param awtImage
+	 *            the <CODE>java.awt.Image</CODE> to convert
+	 * @param quality
+	 *            a float value between 0 and 1
+	 * @return an object of type <CODE>PdfTemplate</CODE>
+	 * @throws BadElementException
+	 *             on error
+	 * @throws IOException
+	 */
+	public static Image getInstance(PdfContentByte cb, java.awt.Image awtImage, float quality) throws BadElementException, IOException {
+		java.awt.image.PixelGrabber pg = new java.awt.image.PixelGrabber(awtImage, 0, 0, -1, -1, true);
+		try {
+			pg.grabPixels();
+		} catch (InterruptedException e) {
+			throw new IOException(MessageLocalization.getComposedMessage("java.awt.image.interrupted.waiting.for.pixels"));
+		}
+		if ((pg.getStatus() & java.awt.image.ImageObserver.ABORT) != 0) {
+			throw new IOException(MessageLocalization.getComposedMessage("java.awt.image.fetch.aborted.or.errored"));
+		}
+		int w = pg.getWidth();
+		int h = pg.getHeight();
+		PdfTemplate tp = cb.createTemplate(w, h);
+		Graphics2D g2d = tp.createGraphics(w, h, true, quality);
+		g2d.drawImage(awtImage, 0, 0, null);
+		g2d.dispose();
+		return getInstance(tp);
+	}
 
-    // copy constructor
-    
+	// image from indirect reference
+
+	/**
+	 * Holds value of property directReference. An image is embedded into a PDF
+	 * as an Image XObject. This object is referenced by a PdfIndirectReference
+	 * object.
+	 */
+	private PdfIndirectReference directReference;
+
+	/**
+	 * Getter for property directReference.
+	 * 
+	 * @return Value of property directReference.
+	 */
+	public PdfIndirectReference getDirectReference() {
+		return this.directReference;
+	}
+
+	/**
+	 * Setter for property directReference.
+	 * 
+	 * @param directReference
+	 *            New value of property directReference.
+	 */
+	public void setDirectReference(PdfIndirectReference directReference) {
+		this.directReference = directReference;
+	}
+
+	/**
+	 * Reuses an existing image.
+	 * 
+	 * @param ref
+	 *            the reference to the image dictionary
+	 * @throws BadElementException
+	 *             on error
+	 * @return the image
+	 */
+	public static Image getInstance(PRIndirectReference ref) throws BadElementException {
+		PdfDictionary dic = (PdfDictionary) PdfReader.getPdfObjectRelease(ref);
+		int width = ((PdfNumber) PdfReader.getPdfObjectRelease(dic.get(PdfName.WIDTH))).intValue();
+		int height = ((PdfNumber) PdfReader.getPdfObjectRelease(dic.get(PdfName.HEIGHT))).intValue();
+		Image imask = null;
+		PdfObject obj = dic.get(PdfName.SMASK);
+		if (obj != null && obj.isIndirect()) {
+			imask = getInstance((PRIndirectReference) obj);
+		} else {
+			obj = dic.get(PdfName.MASK);
+			if (obj != null && obj.isIndirect()) {
+				PdfObject obj2 = PdfReader.getPdfObjectRelease(obj);
+				if (obj2 instanceof PdfDictionary)
+					imask = getInstance((PRIndirectReference) obj);
+			}
+		}
+		Image img = new ImgRaw(width, height, 1, 1, null);
+		img.imageMask = imask;
+		img.directReference = ref;
+		return img;
+	}
+
+	// copy constructor
+
 	/**
 	 * Constructs an <CODE>Image</CODE> -object, using an <VAR>url </VAR>.
 	 * 
@@ -923,12 +914,12 @@ public abstract class Image extends Rectangle {
 		this.scaledHeight = image.scaledHeight;
 		this.mySerialId = image.mySerialId;
 
-        this.directReference = image.directReference;
-        
+		this.directReference = image.directReference;
+
 		this.rotationRadians = image.rotationRadians;
-        this.initialRotation = image.initialRotation;
-        this.indentationLeft = image.indentationLeft;
-        this.indentationRight = image.indentationRight;
+		this.initialRotation = image.initialRotation;
+		this.indentationLeft = image.indentationLeft;
+		this.indentationRight = image.indentationRight;
 		this.spacingBefore = image.spacingBefore;
 		this.spacingAfter = image.spacingAfter;
 
@@ -942,7 +933,7 @@ public abstract class Image extends Rectangle {
 		this.dpiX = image.dpiX;
 		this.dpiY = image.dpiY;
 		this.XYRatio = image.XYRatio;
-		
+
 		this.colorspace = image.colorspace;
 		this.invert = image.invert;
 		this.profile = image.profile;
@@ -965,8 +956,7 @@ public abstract class Image extends Rectangle {
 			return null;
 		try {
 			Class cs = image.getClass();
-			Constructor constructor = cs
-					.getDeclaredConstructor(new Class[] { Image.class });
+			Constructor constructor = cs.getDeclaredConstructor(new Class[] { Image.class });
 			return (Image) constructor.newInstance(new Object[] { image });
 		} catch (Exception e) {
 			throw new ExceptionConverter(e);
@@ -974,7 +964,7 @@ public abstract class Image extends Rectangle {
 	}
 
 	// implementation of the Element interface
-	
+
 	/**
 	 * Returns the type.
 	 * 
@@ -987,7 +977,7 @@ public abstract class Image extends Rectangle {
 
 	/**
 	 * @see com.itextpdf.text.Element#isNestable()
-	 * @since	iText 2.0.8
+	 * @since iText 2.0.8
 	 */
 	public boolean isNestable() {
 		return true;
@@ -996,8 +986,7 @@ public abstract class Image extends Rectangle {
 	// checking the type of Image
 
 	/**
-	 * Returns <CODE>true</CODE> if the image is a <CODE>Jpeg</CODE>
-	 * -object.
+	 * Returns <CODE>true</CODE> if the image is a <CODE>Jpeg</CODE> -object.
 	 * 
 	 * @return a <CODE>boolean</CODE>
 	 */
@@ -1007,8 +996,7 @@ public abstract class Image extends Rectangle {
 	}
 
 	/**
-	 * Returns <CODE>true</CODE> if the image is a <CODE>ImgRaw</CODE>
-	 * -object.
+	 * Returns <CODE>true</CODE> if the image is a <CODE>ImgRaw</CODE> -object.
 	 * 
 	 * @return a <CODE>boolean</CODE>
 	 */
@@ -1027,7 +1015,7 @@ public abstract class Image extends Rectangle {
 	public boolean isImgTemplate() {
 		return type == IMGTEMPLATE;
 	}
-	
+
 	// getters and setters
 
 	/**
@@ -1225,7 +1213,7 @@ public abstract class Image extends Rectangle {
 	public float getPlainHeight() {
 		return plainHeight;
 	}
-	
+
 	/**
 	 * Scale the image to an absolute width and an absolute height.
 	 * 
@@ -1307,7 +1295,7 @@ public abstract class Image extends Rectangle {
 	 *            the height to fit
 	 */
 	public void scaleToFit(float fitWidth, float fitHeight) {
-        scalePercent(100);
+		scalePercent(100);
 		float percentX = (fitWidth * 100) / getScaledWidth();
 		float percentY = (fitHeight * 100) / getScaledHeight();
 		scalePercent(percentX < percentY ? percentX : percentY);
@@ -1355,7 +1343,7 @@ public abstract class Image extends Rectangle {
 
 	/** a static that is used for attributing a unique id to each image. */
 	static long serialId = 0;
-	
+
 	/** Creates a new serial id. */
 	static protected synchronized Long getSerialId() {
 		++serialId;
@@ -1371,27 +1359,28 @@ public abstract class Image extends Rectangle {
 		return mySerialId;
 	}
 
-    // rotation, note that the superclass also has a rotation value.
+	// rotation, note that the superclass also has a rotation value.
 
 	/** This is the rotation of the image in radians. */
 	protected float rotationRadians;
-    
-    /** Holds value of property initialRotation. */
-    private float initialRotation;
 
-    /**
-     * Gets the current image rotation in radians.
-     * @return the current image rotation in radians
-     */
-    public float getImageRotation() {
+	/** Holds value of property initialRotation. */
+	private float initialRotation;
+
+	/**
+	 * Gets the current image rotation in radians.
+	 * 
+	 * @return the current image rotation in radians
+	 */
+	public float getImageRotation() {
 		double d = 2.0 * Math.PI;
 		float rot = (float) ((rotationRadians - initialRotation) % d);
 		if (rot < 0) {
 			rot += d;
 		}
-        return rot;
-    }
-    
+		return rot;
+	}
+
 	/**
 	 * Sets the rotation of the image in radians.
 	 * 
@@ -1419,27 +1408,30 @@ public abstract class Image extends Rectangle {
 		double d = Math.PI;
 		setRotation(deg / 180 * (float) d);
 	}
-    
-    /**
-     * Getter for property initialRotation.
-     * @return Value of property initialRotation.
-     */
-    public float getInitialRotation() {
-        return this.initialRotation;
-    }
-    
-    /**
-     * Some image formats, like TIFF may present the images rotated that have
-     * to be compensated.
-     * @param initialRotation New value of property initialRotation.
-     */
-    public void setInitialRotation(float initialRotation) {
-        float old_rot = rotationRadians - this.initialRotation;
-        this.initialRotation = initialRotation;
-        setRotation(old_rot);
-    }
-    
-    // indentations
+
+	/**
+	 * Getter for property initialRotation.
+	 * 
+	 * @return Value of property initialRotation.
+	 */
+	public float getInitialRotation() {
+		return this.initialRotation;
+	}
+
+	/**
+	 * Some image formats, like TIFF may present the images rotated that have to
+	 * be compensated.
+	 * 
+	 * @param initialRotation
+	 *            New value of property initialRotation.
+	 */
+	public void setInitialRotation(float initialRotation) {
+		float old_rot = rotationRadians - this.initialRotation;
+		this.initialRotation = initialRotation;
+		setRotation(old_rot);
+	}
+
+	// indentations
 
 	/** the indentation to the left. */
 	protected float indentationLeft = 0;
@@ -1529,13 +1521,13 @@ public abstract class Image extends Rectangle {
 		this.spacingAfter = spacing;
 	}
 
-    // widthpercentage (for the moment only used in ColumnText)
+	// widthpercentage (for the moment only used in ColumnText)
 
 	/**
 	 * Holds value of property widthPercentage.
 	 */
 	private float widthPercentage = 100;
-	
+
 	/**
 	 * Getter for property widthPercentage.
 	 * 
@@ -1555,11 +1547,11 @@ public abstract class Image extends Rectangle {
 		this.widthPercentage = widthPercentage;
 	}
 
-    // annotation
+	// annotation
 
 	/** if the annotation is not null the image will be clickable. */
 	protected Annotation annotation = null;
-	
+
 	/**
 	 * Sets the annotation of this Image.
 	 * 
@@ -1579,16 +1571,16 @@ public abstract class Image extends Rectangle {
 		return annotation;
 	}
 
-    // Optional Content
+	// Optional Content
 
-    /** Optional Content layer to which we want this Image to belong. */
+	/** Optional Content layer to which we want this Image to belong. */
 	protected PdfOCG layer;
-	
+
 	/**
 	 * Gets the layer this image belongs to.
 	 * 
-	 * @return the layer this image belongs to or <code>null</code> for no
-	 *         layer defined
+	 * @return the layer this image belongs to or <code>null</code> for no layer
+	 *         defined
 	 */
 	public PdfOCG getLayer() {
 		return layer;
@@ -1628,7 +1620,7 @@ public abstract class Image extends Rectangle {
 	public void setInterpolation(boolean interpolation) {
 		this.interpolation = interpolation;
 	}
-	
+
 	// original type and data
 
 	/** Holds value of property originalType. */
@@ -1636,12 +1628,12 @@ public abstract class Image extends Rectangle {
 
 	/** Holds value of property originalData. */
 	protected byte[] originalData;
-	
+
 	/**
 	 * Getter for property originalType.
 	 * 
 	 * @return Value of property originalType.
-	 *  
+	 * 
 	 */
 	public int getOriginalType() {
 		return this.originalType;
@@ -1652,7 +1644,7 @@ public abstract class Image extends Rectangle {
 	 * 
 	 * @param originalType
 	 *            New value of property originalType.
-	 *  
+	 * 
 	 */
 	public void setOriginalType(int originalType) {
 		this.originalType = originalType;
@@ -1662,7 +1654,7 @@ public abstract class Image extends Rectangle {
 	 * Getter for property originalData.
 	 * 
 	 * @return Value of property originalData.
-	 *  
+	 * 
 	 */
 	public byte[] getOriginalData() {
 		return this.originalData;
@@ -1673,14 +1665,14 @@ public abstract class Image extends Rectangle {
 	 * 
 	 * @param originalData
 	 *            New value of property originalData.
-	 *  
+	 * 
 	 */
 	public void setOriginalData(byte[] originalData) {
 		this.originalData = originalData;
 	}
 
 	// the following values are only set for specific types of images.
-	
+
 	/** Holds value of property deflated. */
 	protected boolean deflated = false;
 
@@ -1688,7 +1680,7 @@ public abstract class Image extends Rectangle {
 	 * Getter for property deflated.
 	 * 
 	 * @return Value of property deflated.
-	 *  
+	 * 
 	 */
 	public boolean isDeflated() {
 		return this.deflated;
@@ -1703,9 +1695,9 @@ public abstract class Image extends Rectangle {
 	public void setDeflated(boolean deflated) {
 		this.deflated = deflated;
 	}
-	
+
 	// DPI info
-	
+
 	/** Holds value of property dpiX. */
 	protected int dpiX = 0;
 
@@ -1742,9 +1734,9 @@ public abstract class Image extends Rectangle {
 		this.dpiX = dpiX;
 		this.dpiY = dpiY;
 	}
-	
+
 	// XY Ratio
-	
+
 	/** Holds value of property XYRatio. */
 	private float XYRatio = 0;
 
@@ -1766,7 +1758,7 @@ public abstract class Image extends Rectangle {
 	public void setXYRatio(float XYRatio) {
 		this.XYRatio = XYRatio;
 	}
-	
+
 	// color, colorspaces and transparency
 
 	/** this is the colorspace of a jpeg-image. */
@@ -1782,7 +1774,7 @@ public abstract class Image extends Rectangle {
 	public int getColorspace() {
 		return colorspace;
 	}
-    
+
 	/** Image color inversion */
 	protected boolean invert = false;
 
@@ -1838,7 +1830,7 @@ public abstract class Image extends Rectangle {
 
 	/** a dictionary with additional information */
 	private PdfDictionary additional = null;
-	
+
 	/**
 	 * Getter for the dictionary with additional information.
 	 * 
@@ -1858,52 +1850,52 @@ public abstract class Image extends Rectangle {
 		this.additional = additional;
 	}
 
-    /**
-     * Replaces CalRGB and CalGray colorspaces with DeviceRGB and DeviceGray.
-     */    
-    public void simplifyColorspace() {
-        if (additional == null)
-            return;
-        PdfArray value = additional.getAsArray(PdfName.COLORSPACE);
-        if (value == null)
-            return;
-        PdfObject cs = simplifyColorspace(value);
-        PdfObject newValue;
-        if (cs.isName())
-            newValue = cs;
-        else {
-            newValue = value;
-            PdfName first = value.getAsName(0);
-            if (PdfName.INDEXED.equals(first)) {
-                if (value.size() >= 2) {
-                    PdfArray second = value.getAsArray(1);
-                    if (second != null) {
-                        value.set(1, simplifyColorspace(second));
-                    }
-                }
-            }
-        }
-        additional.put(PdfName.COLORSPACE, newValue);
-    }
-	
+	/**
+	 * Replaces CalRGB and CalGray colorspaces with DeviceRGB and DeviceGray.
+	 */
+	public void simplifyColorspace() {
+		if (additional == null)
+			return;
+		PdfArray value = additional.getAsArray(PdfName.COLORSPACE);
+		if (value == null)
+			return;
+		PdfObject cs = simplifyColorspace(value);
+		PdfObject newValue;
+		if (cs.isName())
+			newValue = cs;
+		else {
+			newValue = value;
+			PdfName first = value.getAsName(0);
+			if (PdfName.INDEXED.equals(first)) {
+				if (value.size() >= 2) {
+					PdfArray second = value.getAsArray(1);
+					if (second != null) {
+						value.set(1, simplifyColorspace(second));
+					}
+				}
+			}
+		}
+		additional.put(PdfName.COLORSPACE, newValue);
+	}
+
 	/**
 	 * Gets a PDF Name from an array or returns the object that was passed.
 	 */
-    private PdfObject simplifyColorspace(PdfArray obj) {
-        if (obj == null)
-            return obj;
-        PdfName first = obj.getAsName(0);
-        if (PdfName.CALGRAY.equals(first))
-            return PdfName.DEVICEGRAY;
-        else if (PdfName.CALRGB.equals(first))
-            return PdfName.DEVICERGB;
-        else
-            return obj;
-    }
+	private PdfObject simplifyColorspace(PdfArray obj) {
+		if (obj == null)
+			return obj;
+		PdfName first = obj.getAsName(0);
+		if (PdfName.CALGRAY.equals(first))
+			return PdfName.DEVICEGRAY;
+		else if (PdfName.CALRGB.equals(first))
+			return PdfName.DEVICERGB;
+		else
+			return obj;
+	}
 
 	/** Is this image a mask? */
 	protected boolean mask = false;
-	
+
 	/** The image that serves as a mask for this image. */
 	protected Image imageMask;
 
@@ -1932,8 +1924,8 @@ public abstract class Image extends Rectangle {
 	}
 
 	/**
-	 * Returns <CODE>true</CODE> if this <CODE>Image</CODE> has the
-	 * requisites to be a mask.
+	 * Returns <CODE>true</CODE> if this <CODE>Image</CODE> has the requisites
+	 * to be a mask.
 	 * 
 	 * @return <CODE>true</CODE> if this <CODE>Image</CODE> can be a mask
 	 */
@@ -1975,7 +1967,7 @@ public abstract class Image extends Rectangle {
 	 * Getter for property smask.
 	 * 
 	 * @return Value of property smask.
-	 *  
+	 * 
 	 */
 	public boolean isSmask() {
 		return this.smask;
@@ -2014,20 +2006,25 @@ public abstract class Image extends Rectangle {
 		this.transparency = transparency;
 	}
 
-
 	/**
-	 * Returns the compression level used for images written as a compressed stream.
-	 * @return the compression level (0 = best speed, 9 = best compression, -1 is default)
-     * @since	2.1.3
+	 * Returns the compression level used for images written as a compressed
+	 * stream.
+	 * 
+	 * @return the compression level (0 = best speed, 9 = best compression, -1
+	 *         is default)
+	 * @since 2.1.3
 	 */
 	public int getCompressionLevel() {
 		return compressionLevel;
 	}
 
 	/**
-	 * Sets the compression level to be used if the image is written as a compressed stream.
-	 * @param compressionLevel a value between 0 (best speed) and 9 (best compression)
-     * @since	2.1.3
+	 * Sets the compression level to be used if the image is written as a
+	 * compressed stream.
+	 * 
+	 * @param compressionLevel
+	 *            a value between 0 (best speed) and 9 (best compression)
+	 * @since 2.1.3
 	 */
 	public void setCompressionLevel(int compressionLevel) {
 		if (compressionLevel < PdfStream.NO_COMPRESSION || compressionLevel > PdfStream.BEST_COMPRESSION)

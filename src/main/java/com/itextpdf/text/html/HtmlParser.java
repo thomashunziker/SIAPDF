@@ -65,128 +65,148 @@ import com.itextpdf.text.xml.XmlParser;
  */
 
 public class HtmlParser extends XmlParser {
-    
-/**
- * Constructs an HtmlParser.
- */
-    
-    public HtmlParser() {
-        super();
-    }
-    
-/**
- * Parses a given file.
- * @param document the document the parser will write to
- * @param is the InputSource with the content
- */
-    
-    public void go(DocListener document, InputSource is) {
-        try {
-            parser.parse(is, new SAXmyHtmlHandler(document));
-        }
-        catch(SAXException se) {
-            throw new ExceptionConverter(se);
-        }
-        catch(IOException ioe) {
-            throw new ExceptionConverter(ioe);
-        }
-    }
-    
-/**
- * Parses a given file that validates with the iText DTD and writes the content to a document.
- * @param document the document the parser will write to
- * @param is the InputSource with the content
- */
-    
-    public static void parse(DocListener document, InputSource is) {
-        HtmlParser p = new HtmlParser();
-        p.go(document, is);
-    }
-    
-/**
- * Parses a given file.
- * @param document the document the parser will write to
- * @param file the file with the content
- */
-    
-    public void go(DocListener document, String file) {
-        try {
-            parser.parse(file, new SAXmyHtmlHandler(document));
-        }
-        catch(SAXException se) {
-            throw new ExceptionConverter(se);
-        }
-        catch(IOException ioe) {
-            throw new ExceptionConverter(ioe);
-        }
-    }
-    
-/**
- * Parses a given file that validates with the iText DTD and writes the content to a document.
- * @param document the document the parser will write to
- * @param file the file with the content
- */
-    
-    public static void parse(DocListener document, String file) {
-        HtmlParser p = new HtmlParser();
-        p.go(document, file);
-    }
-    
-/**
- * Parses a given file.
- * @param document the document the parser will write to
- * @param is the InputStream with the content
- */
-    
-    public void go(DocListener document, InputStream is) {
-        try {
-            parser.parse(new InputSource(is), new SAXmyHtmlHandler(document));
-        }
-        catch(SAXException se) {
-            throw new ExceptionConverter(se);
-        }
-        catch(IOException ioe) {
-            throw new ExceptionConverter(ioe);
-        }
-    }
-    
-/**
- * Parses a given file that validates with the iText DTD and writes the content to a document.
- * @param document the document the parser will write to
- * @param is the InputStream with the content
- */
-    
-    public static void parse(DocListener document, InputStream is) {
-        HtmlParser p = new HtmlParser();
-        p.go(document, new InputSource(is));
-    }
-    
-/**
- * Parses a given file.
- * @param document the document the parser will write to
- * @param is the Reader with the content
- */
-    
-    public void go(DocListener document, Reader is) {
-        try {
-            parser.parse(new InputSource(is), new SAXmyHtmlHandler(document));
-        }
-        catch(SAXException se) {
-            throw new ExceptionConverter(se);
-        }
-        catch(IOException ioe) {
-            throw new ExceptionConverter(ioe);
-        }
-    }
-    
-/**
- * Parses a given file that validates with the iText DTD and writes the content to a document.
- * @param document the document the parser will write to
- * @param is the Reader with the content
- */
-    
-    public static void parse(DocListener document, Reader is) {
-        HtmlParser p = new HtmlParser();
-        p.go(document, new InputSource(is));
-    }
+
+	/**
+	 * Constructs an HtmlParser.
+	 */
+
+	public HtmlParser() {
+		super();
+	}
+
+	/**
+	 * Parses a given file.
+	 * 
+	 * @param document
+	 *            the document the parser will write to
+	 * @param is
+	 *            the InputSource with the content
+	 */
+
+	public void go(DocListener document, InputSource is) {
+		try {
+			parser.parse(is, new SAXmyHtmlHandler(document));
+		} catch (SAXException se) {
+			throw new ExceptionConverter(se);
+		} catch (IOException ioe) {
+			throw new ExceptionConverter(ioe);
+		}
+	}
+
+	/**
+	 * Parses a given file that validates with the iText DTD and writes the
+	 * content to a document.
+	 * 
+	 * @param document
+	 *            the document the parser will write to
+	 * @param is
+	 *            the InputSource with the content
+	 */
+
+	public static void parse(DocListener document, InputSource is) {
+		HtmlParser p = new HtmlParser();
+		p.go(document, is);
+	}
+
+	/**
+	 * Parses a given file.
+	 * 
+	 * @param document
+	 *            the document the parser will write to
+	 * @param file
+	 *            the file with the content
+	 */
+
+	public void go(DocListener document, String file) {
+		try {
+			parser.parse(file, new SAXmyHtmlHandler(document));
+		} catch (SAXException se) {
+			throw new ExceptionConverter(se);
+		} catch (IOException ioe) {
+			throw new ExceptionConverter(ioe);
+		}
+	}
+
+	/**
+	 * Parses a given file that validates with the iText DTD and writes the
+	 * content to a document.
+	 * 
+	 * @param document
+	 *            the document the parser will write to
+	 * @param file
+	 *            the file with the content
+	 */
+
+	public static void parse(DocListener document, String file) {
+		HtmlParser p = new HtmlParser();
+		p.go(document, file);
+	}
+
+	/**
+	 * Parses a given file.
+	 * 
+	 * @param document
+	 *            the document the parser will write to
+	 * @param is
+	 *            the InputStream with the content
+	 */
+
+	public void go(DocListener document, InputStream is) {
+		try {
+			parser.parse(new InputSource(is), new SAXmyHtmlHandler(document));
+		} catch (SAXException se) {
+			throw new ExceptionConverter(se);
+		} catch (IOException ioe) {
+			throw new ExceptionConverter(ioe);
+		}
+	}
+
+	/**
+	 * Parses a given file that validates with the iText DTD and writes the
+	 * content to a document.
+	 * 
+	 * @param document
+	 *            the document the parser will write to
+	 * @param is
+	 *            the InputStream with the content
+	 */
+
+	public static void parse(DocListener document, InputStream is) {
+		HtmlParser p = new HtmlParser();
+		p.go(document, new InputSource(is));
+	}
+
+	/**
+	 * Parses a given file.
+	 * 
+	 * @param document
+	 *            the document the parser will write to
+	 * @param is
+	 *            the Reader with the content
+	 */
+
+	public void go(DocListener document, Reader is) {
+		try {
+			parser.parse(new InputSource(is), new SAXmyHtmlHandler(document));
+		} catch (SAXException se) {
+			throw new ExceptionConverter(se);
+		} catch (IOException ioe) {
+			throw new ExceptionConverter(ioe);
+		}
+	}
+
+	/**
+	 * Parses a given file that validates with the iText DTD and writes the
+	 * content to a document.
+	 * 
+	 * @param document
+	 *            the document the parser will write to
+	 * @param is
+	 *            the Reader with the content
+	 */
+
+	public static void parse(DocListener document, Reader is) {
+		HtmlParser p = new HtmlParser();
+		p.go(document, new InputSource(is));
+	}
 }

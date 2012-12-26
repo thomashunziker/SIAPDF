@@ -64,41 +64,48 @@ import com.itextpdf.text.ExceptionConverter;
 import com.itextpdf.text.xml.XmlDomWriter;
 
 /**
- * Reads an XMP stream into an org.w3c.dom.Document objects.
- * Allows you to replace the contents of a specific tag.
+ * Reads an XMP stream into an org.w3c.dom.Document objects. Allows you to
+ * replace the contents of a specific tag.
+ * 
  * @since 2.1.3
  */
 
 public class XmpReader {
 
-    private Document domDocument;
-    
-    /**
-     * Constructs an XMP reader
-     * @param	bytes	the XMP content
-     * @throws ExceptionConverter 
-     * @throws IOException 
-     * @throws SAXException 
-     */
+	private Document domDocument;
+
+	/**
+	 * Constructs an XMP reader
+	 * 
+	 * @param bytes
+	 *            the XMP content
+	 * @throws ExceptionConverter
+	 * @throws IOException
+	 * @throws SAXException
+	 */
 	public XmpReader(byte[] bytes) throws SAXException, IOException {
 		try {
-	        DocumentBuilderFactory fact = DocumentBuilderFactory.newInstance();
-	        fact.setNamespaceAware(true);
+			DocumentBuilderFactory fact = DocumentBuilderFactory.newInstance();
+			fact.setNamespaceAware(true);
 			DocumentBuilder db = fact.newDocumentBuilder();
-	        ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
-	        domDocument = db.parse(bais);
+			ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+			domDocument = db.parse(bais);
 		} catch (ParserConfigurationException e) {
 			throw new ExceptionConverter(e);
 		}
 	}
-	
+
 	/**
 	 * Replaces the content of a tag.
-	 * @param	namespaceURI	the URI of the namespace
-	 * @param	localName		the tag name
-	 * @param	value			the new content for the tag
-	 * @return	true if the content was successfully replaced
-	 * @since	2.1.6 the return type has changed from void to boolean
+	 * 
+	 * @param namespaceURI
+	 *            the URI of the namespace
+	 * @param localName
+	 *            the tag name
+	 * @param value
+	 *            the new content for the tag
+	 * @return true if the content was successfully replaced
+	 * @since 2.1.6 the return type has changed from void to boolean
 	 */
 	public boolean replace(String namespaceURI, String localName, String value) {
 		NodeList nodes = domDocument.getElementsByTagNameNS(namespaceURI, localName);
@@ -110,16 +117,21 @@ public class XmpReader {
 			setNodeText(domDocument, node, value);
 		}
 		return true;
-	}    
-	
+	}
+
 	/**
 	 * Adds a tag.
-	 * @param	namespaceURI	the URI of the namespace
-	 * @param	parent			the tag name of the parent
-	 * @param	localName		the name of the tag to add
-	 * @param	value			the new content for the tag
-	 * @return	true if the content was successfully added
-	 * @since	2.1.6
+	 * 
+	 * @param namespaceURI
+	 *            the URI of the namespace
+	 * @param parent
+	 *            the tag name of the parent
+	 * @param localName
+	 *            the name of the tag to add
+	 * @param value
+	 *            the new content for the tag
+	 * @return true if the content was successfully added
+	 * @since 2.1.6
 	 */
 	public boolean add(String parent, String namespaceURI, String localName, String value) {
 		NodeList nodes = domDocument.getElementsByTagName(parent);
@@ -142,42 +154,46 @@ public class XmpReader {
 		}
 		return false;
 	}
-	
-    /**
-     * Sets the text of this node. All the child's node are deleted and a new
-     * child text node is created.
-     * @param domDocument the <CODE>Document</CODE> that contains the node
-     * @param n the <CODE>Node</CODE> to add the text to
-     * @param value the text to add
-     */
-    public boolean setNodeText(Document domDocument, Node n, String value) {
-        if (n == null)
-            return false;
-        Node nc = null;
-        while ((nc = n.getFirstChild()) != null) {
-            n.removeChild(nc);
-        }
-        n.appendChild(domDocument.createTextNode(value));
-        return true;
-    }
-	
-    /**
-     * Writes the document to a byte array.
-     */
+
+	/**
+	 * Sets the text of this node. All the child's node are deleted and a new
+	 * child text node is created.
+	 * 
+	 * @param domDocument
+	 *            the <CODE>Document</CODE> that contains the node
+	 * @param n
+	 *            the <CODE>Node</CODE> to add the text to
+	 * @param value
+	 *            the text to add
+	 */
+	public boolean setNodeText(Document domDocument, Node n, String value) {
+		if (n == null)
+			return false;
+		Node nc = null;
+		while ((nc = n.getFirstChild()) != null) {
+			n.removeChild(nc);
+		}
+		n.appendChild(domDocument.createTextNode(value));
+		return true;
+	}
+
+	/**
+	 * Writes the document to a byte array.
+	 */
 	public byte[] serializeDoc() throws IOException {
 		XmlDomWriter xw = new XmlDomWriter();
-        ByteArrayOutputStream fout = new ByteArrayOutputStream();
-        xw.setOutput(fout, null);
-        fout.write(XmpWriter.XPACKET_PI_BEGIN.getBytes("UTF-8"));
-        fout.flush();
-        NodeList xmpmeta = domDocument.getElementsByTagName("x:xmpmeta");
-        xw.write(xmpmeta.item(0));
-        fout.flush();
+		ByteArrayOutputStream fout = new ByteArrayOutputStream();
+		xw.setOutput(fout, null);
+		fout.write(XmpWriter.XPACKET_PI_BEGIN.getBytes("UTF-8"));
+		fout.flush();
+		NodeList xmpmeta = domDocument.getElementsByTagName("x:xmpmeta");
+		xw.write(xmpmeta.item(0));
+		fout.flush();
 		for (int i = 0; i < 20; i++) {
 			fout.write(XmpWriter.EXTRASPACE.getBytes());
 		}
-        fout.write(XmpWriter.XPACKET_PI_END_W.getBytes());
-        fout.close();
-        return fout.toByteArray();
+		fout.write(XmpWriter.XPACKET_PI_END_W.getBytes());
+		fout.close();
+		return fout.toByteArray();
 	}
 }

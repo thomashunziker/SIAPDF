@@ -175,17 +175,20 @@ public interface Element {
 
 	/**
 	 * This is a possible type of <CODE>Element</CODE>.
-	 * @since	2.1.5
+	 * 
+	 * @since 2.1.5
 	 */
 	public static final int JBIG2 = 36;
 
 	/** This is a possible type of <CODE>Element</CODE>. */
 	public static final int MULTI_COLUMN_TEXT = 40;
-	
+
 	/** This is a possible type of <CODE>Element</CODE>. */
 	public static final int MARKED = 50;
 
-	/** This is a possible type of <CODE>Element</CODE>.
+	/**
+	 * This is a possible type of <CODE>Element</CODE>.
+	 * 
 	 * @since 2.1.2
 	 */
 	public static final int YMARK = 55;
@@ -320,22 +323,25 @@ public interface Element {
 	public int type();
 
 	/**
-	 * Checks if this element is a content object.
-	 * If not, it's a metadata object.
-	 * @since	iText 2.0.8
-	 * @return	true if this is a 'content' element; false if this is a 'metadata' element
+	 * Checks if this element is a content object. If not, it's a metadata
+	 * object.
+	 * 
+	 * @since iText 2.0.8
+	 * @return true if this is a 'content' element; false if this is a
+	 *         'metadata' element
 	 */
-	
+
 	public boolean isContent();
-	
+
 	/**
 	 * Checks if this element is nestable.
-	 * @since	iText 2.0.8
-	 * @return	true if this element can be nested inside other elements.
+	 * 
+	 * @since iText 2.0.8
+	 * @return true if this element can be nested inside other elements.
 	 */
-	
+
 	public boolean isNestable();
-	
+
 	/**
 	 * Gets all the chunks in this element.
 	 * 

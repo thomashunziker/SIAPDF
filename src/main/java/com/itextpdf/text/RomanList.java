@@ -57,8 +57,8 @@ import com.itextpdf.text.factories.RomanNumberFactory;
 
 public class RomanList extends List {
 
-// constructors
-	
+	// constructors
+
 	/**
 	 * Initialization
 	 */
@@ -69,28 +69,33 @@ public class RomanList extends List {
 	/**
 	 * Initialization
 	 * 
-	 * @param symbolIndent	indent
+	 * @param symbolIndent
+	 *            indent
 	 */
 	public RomanList(int symbolIndent) {
 		super(true, symbolIndent);
 	}
 
 	/**
-	 * Initialization 
-	 * @param	lowercase		roman-char in lowercase   
-	 * @param 	symbolIndent	indent
+	 * Initialization
+	 * 
+	 * @param lowercase
+	 *            roman-char in lowercase
+	 * @param symbolIndent
+	 *            indent
 	 */
 	public RomanList(boolean lowercase, int symbolIndent) {
 		super(true, symbolIndent);
 		this.lowercase = lowercase;
 	}
 
-// overridden method
-	
+	// overridden method
+
 	/**
 	 * Adds an <CODE>Object</CODE> to the <CODE>List</CODE>.
-	 *
-	 * @param	o	the object to add.
+	 * 
+	 * @param o
+	 *            the object to add.
 	 * @return true if adding the object succeeded
 	 */
 	public boolean add(Object o) {

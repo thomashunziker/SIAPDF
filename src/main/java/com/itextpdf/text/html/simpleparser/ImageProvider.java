@@ -45,7 +45,6 @@
  * http://www.lowagie.com/iText/
  */
 
-
 package com.itextpdf.text.html.simpleparser;
 
 import com.itextpdf.text.DocListener;
@@ -54,5 +53,5 @@ import com.itextpdf.text.Image;
 import java.util.HashMap;
 
 public interface ImageProvider {
-    Image getImage(String src, HashMap h, ChainedProperties cprops, DocListener doc);
+	Image getImage(String src, HashMap h, ChainedProperties cprops, DocListener doc);
 }

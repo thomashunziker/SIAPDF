@@ -49,94 +49,103 @@ package com.itextpdf.text.pdf.parser;
 import com.itextpdf.text.pdf.DocumentFont;
 
 /**
- * Provides information and calculations needed by render listeners
- * to display/evaluate text render operations.
- * <br><br>
- * This is passed between the {@link PdfContentStreamProcessor} and 
- * {@link RenderListener} objects as text rendering operations are
- * discovered
+ * Provides information and calculations needed by render listeners to
+ * display/evaluate text render operations. <br>
+ * <br>
+ * This is passed between the {@link PdfContentStreamProcessor} and
+ * {@link RenderListener} objects as text rendering operations are discovered
  */
 public class TextRenderInfo {
-    private final String text;
-    private final Matrix textToUserSpaceTransformMatrix;
-    private final GraphicsState gs;
-    
-    /**
-     * Creates a new TextRenderInfo object
-     * @param text the text that should be displayed
-     * @param gs the graphics state (note: at this time, this is not immutable, so don't cache it)
-     * @param textMatrix the text matrix at the time of the render operation
-     */
-    TextRenderInfo(String text, GraphicsState gs, Matrix textMatrix) {
-        this.text = text;
-        this.textToUserSpaceTransformMatrix = textMatrix.multiply(gs.ctm);
-        this.gs = gs;
-    }
-    
-    /**
-     * @return the text to render
-     */
-    public String getText(){ 
-        return text; 
-    }
+	private final String text;
+	private final Matrix textToUserSpaceTransformMatrix;
+	private final GraphicsState gs;
 
-    /**
-     * @return the unscaled (i.e. in Text space) width of the text
-     */
-    public float getUnscaledWidth(){ 
-        return getStringWidth(text); 
-    }
-    
-    /**
-     * @return a vector in User space representing the start point of the text
-     */
-    public Vector getStartPoint(){ 
-        return new Vector(0, 0, 1).cross(textToUserSpaceTransformMatrix); 
-    }
-    
-    /**
-     * @return a vector in User space representing the end point of the text (i.e. the 
-     * starting point of the text plus the width of the text, transformed by the applicable transformation matrices)
-     */
-    public Vector getEndPoint(){ 
-        return new Vector(getUnscaledWidth(), 0, 1).cross(textToUserSpaceTransformMatrix); 
-    }
-    
-    /**
-     * @return The width, in user space units, of a single space character in the current font
-     */
-    public float getSingleSpaceWidth(){
-        return new Vector(getUnscaledFontSpaceWidth(), 0, 1).cross(textToUserSpaceTransformMatrix).subtract(getStartPoint()).length();
-    }
-    
-    /**
-     * Calculates the width of a space character.  If the font does not define
-     * a width for a standard space character \u0020, we also attempt to use
-     * the width of \u00A0 (a non-breaking space in many fonts)
-     * @return the width of a single space character in text space units
-     */
-    private float getUnscaledFontSpaceWidth(){
-        char charToUse = ' ';
-        if (gs.font.getWidth(charToUse) == 0)
-            charToUse = '\u00A0';
-        return getStringWidth(String.valueOf(charToUse));
-    }
-    
-    /**
-     * Gets the width of a String in text space units
-     * @param string    the string that needs measuring
-     * @return  the width of a String in text space units
-     */
-    private float getStringWidth(String string){
-        DocumentFont font = gs.font;
-        char[] chars = string.toCharArray();
-        float totalWidth = 0;
-        for (int i = 0; i < chars.length; i++) {
-            float w = font.getWidth(chars[i]) / 1000.0f;
-            float wordSpacing = chars[i] == 32 ? gs.wordSpacing : 0f;
-            totalWidth += (w * gs.fontSize + gs.characterSpacing + wordSpacing) * gs.horizontalScaling;
-        }
-        
-        return totalWidth;
-    }    
+	/**
+	 * Creates a new TextRenderInfo object
+	 * 
+	 * @param text
+	 *            the text that should be displayed
+	 * @param gs
+	 *            the graphics state (note: at this time, this is not immutable,
+	 *            so don't cache it)
+	 * @param textMatrix
+	 *            the text matrix at the time of the render operation
+	 */
+	TextRenderInfo(String text, GraphicsState gs, Matrix textMatrix) {
+		this.text = text;
+		this.textToUserSpaceTransformMatrix = textMatrix.multiply(gs.ctm);
+		this.gs = gs;
+	}
+
+	/**
+	 * @return the text to render
+	 */
+	public String getText() {
+		return text;
+	}
+
+	/**
+	 * @return the unscaled (i.e. in Text space) width of the text
+	 */
+	public float getUnscaledWidth() {
+		return getStringWidth(text);
+	}
+
+	/**
+	 * @return a vector in User space representing the start point of the text
+	 */
+	public Vector getStartPoint() {
+		return new Vector(0, 0, 1).cross(textToUserSpaceTransformMatrix);
+	}
+
+	/**
+	 * @return a vector in User space representing the end point of the text
+	 *         (i.e. the starting point of the text plus the width of the text,
+	 *         transformed by the applicable transformation matrices)
+	 */
+	public Vector getEndPoint() {
+		return new Vector(getUnscaledWidth(), 0, 1).cross(textToUserSpaceTransformMatrix);
+	}
+
+	/**
+	 * @return The width, in user space units, of a single space character in
+	 *         the current font
+	 */
+	public float getSingleSpaceWidth() {
+		return new Vector(getUnscaledFontSpaceWidth(), 0, 1).cross(textToUserSpaceTransformMatrix).subtract(getStartPoint()).length();
+	}
+
+	/**
+	 * Calculates the width of a space character. If the font does not define a
+	 * width for a standard space character , we also attempt to use the width
+	 * of \u00A0 (a non-breaking space in many fonts)
+	 * 
+	 * @return the width of a single space character in text space units
+	 */
+	private float getUnscaledFontSpaceWidth() {
+		char charToUse = ' ';
+		if (gs.font.getWidth(charToUse) == 0)
+			charToUse = '\u00A0';
+		return getStringWidth(String.valueOf(charToUse));
+	}
+
+	/**
+	 * Gets the width of a String in text space units
+	 * 
+	 * @param string
+	 *            the string that needs measuring
+	 * @return the width of a String in text space units
+	 */
+	private float getStringWidth(String string) {
+		DocumentFont font = gs.font;
+		char[] chars = string.toCharArray();
+		float totalWidth = 0;
+		for (int i = 0; i < chars.length; i++) {
+			float w = font.getWidth(chars[i]) / 1000.0f;
+			float wordSpacing = chars[i] == 32 ? gs.wordSpacing : 0f;
+			totalWidth += (w * gs.fontSize + gs.characterSpacing + wordSpacing) * gs.horizontalScaling;
+		}
+
+		return totalWidth;
+	}
 }

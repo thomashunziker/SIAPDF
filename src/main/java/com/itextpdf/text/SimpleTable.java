@@ -56,10 +56,9 @@ import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfPTableEvent;
 
-
 /**
- * Rectangle that can be used for Cells.
- * This Rectangle is padded and knows how to draw itself in a PdfPTable or PdfPcellEvent.
+ * Rectangle that can be used for Cells. This Rectangle is padded and knows how
+ * to draw itself in a PdfPTable or PdfPcellEvent.
  */
 public class SimpleTable extends Rectangle implements PdfPTableEvent, TextElementArray {
 
@@ -75,41 +74,44 @@ public class SimpleTable extends Rectangle implements PdfPTableEvent, TextElemen
 	private float cellpadding;
 	/** the alignment of the table. */
 	private int alignment;
-	
+
 	/**
-	 * A RectangleCell is always constructed without any dimensions.
-	 * Dimensions are defined after creation.
+	 * A RectangleCell is always constructed without any dimensions. Dimensions
+	 * are defined after creation.
 	 */
 	public SimpleTable() {
 		super(0f, 0f, 0f, 0f);
 		setBorder(BOX);
 		setBorderWidth(2f);
 	}
-	
+
 	/**
 	 * Adds content to this object.
+	 * 
 	 * @param element
 	 * @throws BadElementException
 	 */
 	public void addElement(SimpleCell element) throws BadElementException {
-		if(!element.isCellgroup()) {
+		if (!element.isCellgroup()) {
 			throw new BadElementException(MessageLocalization.getComposedMessage("you.can.t.add.cells.to.a.table.directly.add.them.to.a.row.first"));
 		}
 		content.add(element);
 	}
-	
+
 	/**
 	 * Creates a Table object based on this TableAttributes object.
+	 * 
 	 * @return a com.itextpdf.text.Table object
 	 * @throws BadElementException
 	 */
 	public Table createTable() throws BadElementException {
-		if (content.isEmpty()) throw new BadElementException(MessageLocalization.getComposedMessage("trying.to.create.a.table.without.rows"));
-		SimpleCell row = (SimpleCell)content.get(0);
+		if (content.isEmpty())
+			throw new BadElementException(MessageLocalization.getComposedMessage("trying.to.create.a.table.without.rows"));
+		SimpleCell row = (SimpleCell) content.get(0);
 		SimpleCell cell;
 		int columns = 0;
-		for (Iterator i = row.getContent().iterator(); i.hasNext(); ) {
-			cell = (SimpleCell)i.next();
+		for (Iterator i = row.getContent().iterator(); i.hasNext();) {
+			cell = (SimpleCell) i.next();
 			columns += cell.getColspan();
 		}
 		float[] widths = new float[columns];
@@ -120,21 +122,23 @@ public class SimpleTable extends Rectangle implements PdfPTableEvent, TextElemen
 		table.setPadding(cellpadding);
 		table.cloneNonPositionParameters(this);
 		int pos;
-		for (Iterator rows = content.iterator(); rows.hasNext(); ) {
-			row = (SimpleCell)rows.next();
+		for (Iterator rows = content.iterator(); rows.hasNext();) {
+			row = (SimpleCell) rows.next();
 			pos = 0;
-			for (Iterator cells = row.getContent().iterator(); cells.hasNext(); ) {
-				cell = (SimpleCell)cells.next();
+			for (Iterator cells = row.getContent().iterator(); cells.hasNext();) {
+				cell = (SimpleCell) cells.next();
 				table.addCell(cell.createCell(row));
 				if (cell.getColspan() == 1) {
-					if (cell.getWidth() > 0) widths[pos] = cell.getWidth();
-					if (cell.getWidthpercentage() > 0) widthpercentages[pos] = cell.getWidthpercentage();
+					if (cell.getWidth() > 0)
+						widths[pos] = cell.getWidth();
+					if (cell.getWidthpercentage() > 0)
+						widthpercentages[pos] = cell.getWidthpercentage();
 				}
 				pos += cell.getColspan();
 			}
 		}
 		float sumWidths = 0f;
-		for(int i = 0; i < columns; i++) {
+		for (int i = 0; i < columns; i++) {
 			if (widths[i] == 0) {
 				sumWidths = 0;
 				break;
@@ -145,9 +149,8 @@ public class SimpleTable extends Rectangle implements PdfPTableEvent, TextElemen
 			table.setWidth(sumWidths);
 			table.setLocked(true);
 			table.setWidths(widths);
-		}
-		else {
-			for(int i = 0; i < columns; i++) {
+		} else {
+			for (int i = 0; i < columns; i++) {
 				if (widthpercentages[i] == 0) {
 					sumWidths = 0;
 					break;
@@ -161,25 +164,26 @@ public class SimpleTable extends Rectangle implements PdfPTableEvent, TextElemen
 		if (width > 0) {
 			table.setWidth(width);
 			table.setLocked(true);
-		}
-		else if (widthpercentage > 0) {
+		} else if (widthpercentage > 0) {
 			table.setWidth(widthpercentage);
 		}
 		return table;
 	}
-	
+
 	/**
 	 * Creates a PdfPTable object based on this TableAttributes object.
+	 * 
 	 * @return a com.itextpdf.text.pdf.PdfPTable object
 	 * @throws DocumentException
 	 */
 	public PdfPTable createPdfPTable() throws DocumentException {
-		if (content.isEmpty()) throw new BadElementException(MessageLocalization.getComposedMessage("trying.to.create.a.table.without.rows"));
-		SimpleCell row = (SimpleCell)content.get(0);
+		if (content.isEmpty())
+			throw new BadElementException(MessageLocalization.getComposedMessage("trying.to.create.a.table.without.rows"));
+		SimpleCell row = (SimpleCell) content.get(0);
 		SimpleCell cell;
 		int columns = 0;
-		for (Iterator i = row.getContent().iterator(); i.hasNext(); ) {
-			cell = (SimpleCell)i.next();
+		for (Iterator i = row.getContent().iterator(); i.hasNext();) {
+			cell = (SimpleCell) i.next();
 			columns += cell.getColspan();
 		}
 		float[] widths = new float[columns];
@@ -188,34 +192,36 @@ public class SimpleTable extends Rectangle implements PdfPTableEvent, TextElemen
 		table.setTableEvent(this);
 		table.setHorizontalAlignment(alignment);
 		int pos;
-		for (Iterator rows = content.iterator(); rows.hasNext(); ) {
-			row = (SimpleCell)rows.next();
+		for (Iterator rows = content.iterator(); rows.hasNext();) {
+			row = (SimpleCell) rows.next();
 			pos = 0;
-			for (Iterator cells = row.getContent().iterator(); cells.hasNext(); ) {
-				cell = (SimpleCell)cells.next();
-				if (Float.isNaN(cell.getSpacing_left()))	{
+			for (Iterator cells = row.getContent().iterator(); cells.hasNext();) {
+				cell = (SimpleCell) cells.next();
+				if (Float.isNaN(cell.getSpacing_left())) {
 					cell.setSpacing_left(cellspacing / 2f);
 				}
-				if (Float.isNaN(cell.getSpacing_right()))	{
+				if (Float.isNaN(cell.getSpacing_right())) {
 					cell.setSpacing_right(cellspacing / 2f);
 				}
-				if (Float.isNaN(cell.getSpacing_top()))	{
+				if (Float.isNaN(cell.getSpacing_top())) {
 					cell.setSpacing_top(cellspacing / 2f);
 				}
-				if (Float.isNaN(cell.getSpacing_bottom()))	{
+				if (Float.isNaN(cell.getSpacing_bottom())) {
 					cell.setSpacing_bottom(cellspacing / 2f);
 				}
 				cell.setPadding(cellpadding);
 				table.addCell(cell.createPdfPCell(row));
 				if (cell.getColspan() == 1) {
-					if (cell.getWidth() > 0) widths[pos] = cell.getWidth();
-					if (cell.getWidthpercentage() > 0) widthpercentages[pos] = cell.getWidthpercentage();
+					if (cell.getWidth() > 0)
+						widths[pos] = cell.getWidth();
+					if (cell.getWidthpercentage() > 0)
+						widthpercentages[pos] = cell.getWidthpercentage();
 				}
 				pos += cell.getColspan();
 			}
 		}
 		float sumWidths = 0f;
-		for(int i = 0; i < columns; i++) {
+		for (int i = 0; i < columns; i++) {
 			if (widths[i] == 0) {
 				sumWidths = 0;
 				break;
@@ -225,9 +231,8 @@ public class SimpleTable extends Rectangle implements PdfPTableEvent, TextElemen
 		if (sumWidths > 0) {
 			table.setTotalWidth(sumWidths);
 			table.setWidths(widths);
-		}
-		else {
-			for(int i = 0; i < columns; i++) {
+		} else {
+			for (int i = 0; i < columns; i++) {
 				if (widthpercentages[i] == 0) {
 					sumWidths = 0;
 					break;
@@ -246,83 +251,99 @@ public class SimpleTable extends Rectangle implements PdfPTableEvent, TextElemen
 		}
 		return table;
 	}
-	
+
 	/**
-     * @see com.itextpdf.text.pdf.PdfPTableEvent#tableLayout(com.itextpdf.text.pdf.PdfPTable, float[][], float[], int, int, com.itextpdf.text.pdf.PdfContentByte[])
- 	 */
+	 * @see com.itextpdf.text.pdf.PdfPTableEvent#tableLayout(com.itextpdf.text.pdf.PdfPTable,
+	 *      float[][], float[], int, int,
+	 *      com.itextpdf.text.pdf.PdfContentByte[])
+	 */
 	public void tableLayout(PdfPTable table, float[][] widths, float[] heights, int headerRows, int rowStart, PdfContentByte[] canvases) {
 		float[] width = widths[0];
 		Rectangle rect = new Rectangle(width[0], heights[heights.length - 1], width[width.length - 1], heights[0]);
 		rect.cloneNonPositionParameters(this);
-        int bd = rect.getBorder();
-        rect.setBorder(Rectangle.NO_BORDER);
+		int bd = rect.getBorder();
+		rect.setBorder(Rectangle.NO_BORDER);
 		canvases[PdfPTable.BACKGROUNDCANVAS].rectangle(rect);
-        rect.setBorder(bd);
+		rect.setBorder(bd);
 		rect.setBackgroundColor(null);
 		canvases[PdfPTable.LINECANVAS].rectangle(rect);
 	}
-	
+
 	/**
 	 * @return Returns the cellpadding.
 	 */
 	public float getCellpadding() {
 		return cellpadding;
 	}
+
 	/**
-	 * @param cellpadding The cellpadding to set.
+	 * @param cellpadding
+	 *            The cellpadding to set.
 	 */
 	public void setCellpadding(float cellpadding) {
 		this.cellpadding = cellpadding;
 	}
+
 	/**
 	 * @return Returns the cellspacing.
 	 */
 	public float getCellspacing() {
 		return cellspacing;
 	}
+
 	/**
-	 * @param cellspacing The cellspacing to set.
+	 * @param cellspacing
+	 *            The cellspacing to set.
 	 */
 	public void setCellspacing(float cellspacing) {
 		this.cellspacing = cellspacing;
 	}
-	
+
 	/**
 	 * @return Returns the alignment.
 	 */
 	public int getAlignment() {
 		return alignment;
 	}
+
 	/**
-	 * @param alignment The alignment to set.
+	 * @param alignment
+	 *            The alignment to set.
 	 */
 	public void setAlignment(int alignment) {
 		this.alignment = alignment;
 	}
+
 	/**
 	 * @return Returns the width.
 	 */
 	public float getWidth() {
 		return width;
 	}
+
 	/**
-	 * @param width The width to set.
+	 * @param width
+	 *            The width to set.
 	 */
 	public void setWidth(float width) {
 		this.width = width;
 	}
+
 	/**
 	 * @return Returns the widthpercentage.
 	 */
 	public float getWidthpercentage() {
 		return widthpercentage;
 	}
+
 	/**
-	 * @param widthpercentage The widthpercentage to set.
+	 * @param widthpercentage
+	 *            The widthpercentage to set.
 	 */
 	public void setWidthpercentage(float widthpercentage) {
 		this.widthpercentage = widthpercentage;
 	}
+
 	/**
 	 * @see com.itextpdf.text.Element#type()
 	 */
@@ -332,7 +353,7 @@ public class SimpleTable extends Rectangle implements PdfPTableEvent, TextElemen
 
 	/**
 	 * @see com.itextpdf.text.Element#isNestable()
-	 * @since	iText 2.0.8
+	 * @since iText 2.0.8
 	 */
 	public boolean isNestable() {
 		return true;
@@ -343,13 +364,11 @@ public class SimpleTable extends Rectangle implements PdfPTableEvent, TextElemen
 	 */
 	public boolean add(Object o) {
 		try {
-			addElement((SimpleCell)o);
+			addElement((SimpleCell) o);
 			return true;
-		}
-		catch(ClassCastException e) {
+		} catch (ClassCastException e) {
 			return false;
-		}
-		catch(BadElementException e) {
+		} catch (BadElementException e) {
 			throw new ExceptionConverter(e);
 		}
 	}

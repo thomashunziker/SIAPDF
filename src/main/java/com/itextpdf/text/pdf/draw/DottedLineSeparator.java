@@ -52,31 +52,33 @@ package com.itextpdf.text.pdf.draw;
 import com.itextpdf.text.pdf.PdfContentByte;
 
 /**
- * Element that draws a dotted line from left to right.
- * Can be added directly to a document or column.
- * Can also be used to create a separator chunk.
- * @since	2.1.2 
+ * Element that draws a dotted line from left to right. Can be added directly to
+ * a document or column. Can also be used to create a separator chunk.
+ * 
+ * @since 2.1.2
  */
 public class DottedLineSeparator extends LineSeparator {
 
 	/** the gap between the dots. */
 	protected float gap = 5;
-	
+
 	/**
-	 * @see com.itextpdf.text.pdf.draw.DrawInterface#draw(com.itextpdf.text.pdf.PdfContentByte, float, float, float, float, float)
+	 * @see com.itextpdf.text.pdf.draw.DrawInterface#draw(com.itextpdf.text.pdf.PdfContentByte,
+	 *      float, float, float, float, float)
 	 */
 	public void draw(PdfContentByte canvas, float llx, float lly, float urx, float ury, float y) {
 		canvas.saveState();
 		canvas.setLineWidth(lineWidth);
 		canvas.setLineCap(PdfContentByte.LINE_CAP_ROUND);
 		canvas.setLineDash(0, gap, gap / 2);
-        drawLine(canvas, llx, urx, y);
+		drawLine(canvas, llx, urx, y);
 		canvas.restoreState();
 	}
 
 	/**
 	 * Getter for the gap between the center of the dots of the dotted line.
-	 * @return	the gap between the center of the dots
+	 * 
+	 * @return the gap between the center of the dots
 	 */
 	public float getGap() {
 		return gap;
@@ -84,7 +86,9 @@ public class DottedLineSeparator extends LineSeparator {
 
 	/**
 	 * Setter for the gap between the center of the dots of the dotted line.
-	 * @param	gap	the gap between the center of the dots
+	 * 
+	 * @param gap
+	 *            the gap between the center of the dots
 	 */
 	public void setGap(float gap) {
 		this.gap = gap;

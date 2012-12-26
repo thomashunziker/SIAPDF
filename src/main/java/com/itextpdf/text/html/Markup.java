@@ -272,9 +272,11 @@ public class Markup {
 	/** a CSS value for text decoration */
 	public static final String CSS_VALUE_UNDERLINE = "underline";
 
-	/** a default value for font-size 
-     * @since 2.1.3
-     */
+	/**
+	 * a default value for font-size
+	 * 
+	 * @since 2.1.3
+	 */
 	public static final float DEFAULT_FONT_SIZE = 12f;
 
 	/**
@@ -422,8 +424,7 @@ public class Markup {
 		s = s.toLowerCase().trim();
 		try {
 			return WebColors.getRGBColor(s);
-		}
-		catch(IllegalArgumentException iae) {
+		} catch (IllegalArgumentException iae) {
 			return null;
 		}
 	}
@@ -475,8 +476,7 @@ public class Markup {
 	 *            the String that marks the end of a Comment section.
 	 * @return the String stripped of its comment section
 	 */
-	public static String removeComment(String string, String startComment,
-			String endComment) {
+	public static String removeComment(String string, String startComment, String endComment) {
 		StringBuffer result = new StringBuffer();
 		int pos = 0;
 		int end = endComment.length();

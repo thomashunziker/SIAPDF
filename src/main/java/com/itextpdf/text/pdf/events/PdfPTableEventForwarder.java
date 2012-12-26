@@ -57,32 +57,35 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfPTableEvent;
 
 /**
- * If you want to add more than one page event to a PdfPTable,
- * you have to construct a PdfPTableEventForwarder, add the
- * different events to this object and add the forwarder to
- * the PdfWriter.
+ * If you want to add more than one page event to a PdfPTable, you have to
+ * construct a PdfPTableEventForwarder, add the different events to this object
+ * and add the forwarder to the PdfWriter.
  */
 
 public class PdfPTableEventForwarder implements PdfPTableEvent {
 
 	/** ArrayList containing all the PageEvents that have to be executed. */
 	protected ArrayList events = new ArrayList();
-	
-	/** 
+
+	/**
 	 * Add a page event to the forwarder.
-	 * @param event an event that has to be added to the forwarder.
+	 * 
+	 * @param event
+	 *            an event that has to be added to the forwarder.
 	 */
 	public void addTableEvent(PdfPTableEvent event) {
 		events.add(event);
 	}
 
 	/**
-	 * @see com.itextpdf.text.pdf.PdfPTableEvent#tableLayout(com.itextpdf.text.pdf.PdfPTable, float[][], float[], int, int, com.itextpdf.text.pdf.PdfContentByte[])
+	 * @see com.itextpdf.text.pdf.PdfPTableEvent#tableLayout(com.itextpdf.text.pdf.PdfPTable,
+	 *      float[][], float[], int, int,
+	 *      com.itextpdf.text.pdf.PdfContentByte[])
 	 */
 	public void tableLayout(PdfPTable table, float[][] widths, float[] heights, int headerRows, int rowStart, PdfContentByte[] canvases) {
 		PdfPTableEvent event;
-		for (Iterator i = events.iterator(); i.hasNext(); ) {
-			event = (PdfPTableEvent)i.next();
+		for (Iterator i = events.iterator(); i.hasNext();) {
+			event = (PdfPTableEvent) i.next();
 			event.tableLayout(table, widths, heights, headerRows, rowStart, canvases);
 		}
 	}

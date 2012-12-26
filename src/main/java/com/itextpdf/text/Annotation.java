@@ -54,8 +54,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * An <CODE>Annotation</CODE> is a little note that can be added to a page on
- * a document.
+ * An <CODE>Annotation</CODE> is a little note that can be added to a page on a
+ * document.
  * 
  * @see Element
  * @see Anchor
@@ -158,8 +158,7 @@ public class Annotation implements Element {
 	// constructors
 
 	/**
-	 * Constructs an <CODE>Annotation</CODE> with a certain title and some
-	 * text.
+	 * Constructs an <CODE>Annotation</CODE> with a certain title and some text.
 	 * 
 	 * @param llx
 	 *            lower left x coordinate
@@ -180,18 +179,17 @@ public class Annotation implements Element {
 	/**
 	 * Copy constructor.
 	 */
-    public Annotation(Annotation an) {
-        annotationtype = an.annotationtype;
-        annotationAttributes = an.annotationAttributes;
-        llx = an.llx;
-        lly = an.lly;
-        urx = an.urx;
-        ury = an.ury;
-    }
-    
+	public Annotation(Annotation an) {
+		annotationtype = an.annotationtype;
+		annotationAttributes = an.annotationAttributes;
+		llx = an.llx;
+		lly = an.lly;
+		urx = an.urx;
+		ury = an.ury;
+	}
+
 	/**
-	 * Constructs an <CODE>Annotation</CODE> with a certain title and some
-	 * text.
+	 * Constructs an <CODE>Annotation</CODE> with a certain title and some text.
 	 * 
 	 * @param title
 	 *            the title of the annotation
@@ -205,8 +203,7 @@ public class Annotation implements Element {
 	}
 
 	/**
-	 * Constructs an <CODE>Annotation</CODE> with a certain title and some
-	 * text.
+	 * Constructs an <CODE>Annotation</CODE> with a certain title and some text.
 	 * 
 	 * @param title
 	 *            the title of the annotation
@@ -221,8 +218,7 @@ public class Annotation implements Element {
 	 * @param ury
 	 *            the upper right y-value
 	 */
-	public Annotation(String title, String text, float llx, float lly,
-			float urx, float ury) {
+	public Annotation(String title, String text, float llx, float lly, float urx, float ury) {
 		this(llx, lly, urx, ury);
 		annotationtype = TEXT;
 		annotationAttributes.put(TITLE, title);
@@ -285,8 +281,7 @@ public class Annotation implements Element {
 	 * @param dest
 	 *            the destination in this file
 	 */
-	public Annotation(float llx, float lly, float urx, float ury, String file,
-			String dest) {
+	public Annotation(float llx, float lly, float urx, float ury, String file, String dest) {
 		this(llx, lly, urx, ury);
 		annotationtype = FILE_DEST;
 		annotationAttributes.put(FILE, file);
@@ -307,14 +302,12 @@ public class Annotation implements Element {
 	 * @param showOnDisplay
 	 *            if true play on display of the page
 	 */
-	public Annotation(float llx, float lly, float urx, float ury,
-			String moviePath, String mimeType, boolean showOnDisplay) {
+	public Annotation(float llx, float lly, float urx, float ury, String moviePath, String mimeType, boolean showOnDisplay) {
 		this(llx, lly, urx, ury);
 		annotationtype = SCREEN;
 		annotationAttributes.put(FILE, moviePath);
 		annotationAttributes.put(MIMETYPE, mimeType);
-		annotationAttributes.put(PARAMETERS, new boolean[] {
-				false /* embedded */, showOnDisplay });
+		annotationAttributes.put(PARAMETERS, new boolean[] { false /* embedded */, showOnDisplay });
 	}
 
 	/**
@@ -333,8 +326,7 @@ public class Annotation implements Element {
 	 * @param page
 	 *            a page number in this file
 	 */
-	public Annotation(float llx, float lly, float urx, float ury, String file,
-			int page) {
+	public Annotation(float llx, float lly, float urx, float ury, String file, int page) {
 		this(llx, lly, urx, ury);
 		annotationtype = FILE_PAGE;
 		annotationAttributes.put(FILE, file);
@@ -381,9 +373,7 @@ public class Annotation implements Element {
 	 * @param defaultdir
 	 *            the default directory to run this application in
 	 */
-	public Annotation(float llx, float lly, float urx, float ury,
-			String application, String parameters, String operation,
-			String defaultdir) {
+	public Annotation(float llx, float lly, float urx, float ury, String application, String parameters, String operation, String defaultdir) {
 		this(llx, lly, urx, ury);
 		annotationtype = LAUNCH;
 		annotationAttributes.put(APPLICATION, application);
@@ -581,10 +571,10 @@ public class Annotation implements Element {
 	public HashMap attributes() {
 		return annotationAttributes;
 	}
-	
+
 	/**
 	 * @see com.itextpdf.text.Element#isContent()
-	 * @since	iText 2.0.8
+	 * @since iText 2.0.8
 	 */
 	public boolean isContent() {
 		return true;
@@ -592,7 +582,7 @@ public class Annotation implements Element {
 
 	/**
 	 * @see com.itextpdf.text.Element#isNestable()
-	 * @since	iText 2.0.8
+	 * @since iText 2.0.8
 	 */
 	public boolean isNestable() {
 		return true;

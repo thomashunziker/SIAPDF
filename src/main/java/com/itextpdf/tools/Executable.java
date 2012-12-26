@@ -59,52 +59,41 @@ import com.itextpdf.text.error_messages.MessageLocalization;
  * This class enables you to call an executable that will show a PDF file.
  */
 public class Executable {
-	
+
 	/**
 	 * The path to Acrobat Reader.
 	 */
 	public static String acroread = null;
 
-	
 	/**
 	 * Performs an action on a PDF document.
+	 * 
 	 * @param fileName
 	 * @param parameters
 	 * @param waitForTermination
 	 * @return a process
 	 * @throws IOException
 	 */
-	private static Process action(final String fileName,
-			String parameters, boolean waitForTermination) throws IOException {
+	private static Process action(final String fileName, String parameters, boolean waitForTermination) throws IOException {
 		Process process = null;
 		if (parameters.trim().length() > 0) {
 			parameters = " " + parameters.trim();
-		}
-		else {
+		} else {
 			parameters = "";
 		}
 		if (acroread != null) {
-			process = Runtime.getRuntime().exec(
-					acroread + parameters + " \"" + fileName + "\"");
-		}
-		else if (isWindows()) {
+			process = Runtime.getRuntime().exec(acroread + parameters + " \"" + fileName + "\"");
+		} else if (isWindows()) {
 			if (isWindows9X()) {
-				process = Runtime.getRuntime().exec(
-						"command.com /C start acrord32" + parameters + " \"" + fileName + "\"");
+				process = Runtime.getRuntime().exec("command.com /C start acrord32" + parameters + " \"" + fileName + "\"");
+			} else {
+				process = Runtime.getRuntime().exec("cmd /c start acrord32" + parameters + " \"" + fileName + "\"");
 			}
-			else {
-				process = Runtime.getRuntime().exec(
-					"cmd /c start acrord32" + parameters + " \"" + fileName + "\"");
-			}
-		}
-		else if (isMac()) {
+		} else if (isMac()) {
 			if (parameters.trim().length() == 0) {
-				process = Runtime.getRuntime().exec(
-					new String[] { "/usr/bin/open", fileName });
-			}
-			else {
-				process = Runtime.getRuntime().exec(
-						new String[] { "/usr/bin/open", parameters.trim(), fileName });
+				process = Runtime.getRuntime().exec(new String[] { "/usr/bin/open", fileName });
+			} else {
+				process = Runtime.getRuntime().exec(new String[] { "/usr/bin/open", parameters.trim(), fileName });
 			}
 		}
 		try {
@@ -114,33 +103,34 @@ public class Executable {
 		}
 		return process;
 	}
-	
+
 	/**
 	 * Opens a PDF document.
+	 * 
 	 * @param fileName
 	 * @param waitForTermination
 	 * @return a process
 	 * @throws IOException
 	 */
-	public static final Process openDocument(String fileName,
-			boolean waitForTermination) throws IOException {
+	public static final Process openDocument(String fileName, boolean waitForTermination) throws IOException {
 		return action(fileName, "", waitForTermination);
 	}
 
 	/**
 	 * Opens a PDF document.
+	 * 
 	 * @param file
 	 * @param waitForTermination
 	 * @return a process
 	 * @throws IOException
 	 */
-	public static final Process openDocument(File file,
-			boolean waitForTermination) throws IOException {
+	public static final Process openDocument(File file, boolean waitForTermination) throws IOException {
 		return openDocument(file.getAbsolutePath(), waitForTermination);
 	}
 
 	/**
 	 * Opens a PDF document.
+	 * 
 	 * @param fileName
 	 * @return a process
 	 * @throws IOException
@@ -151,6 +141,7 @@ public class Executable {
 
 	/**
 	 * Opens a PDF document.
+	 * 
 	 * @param file
 	 * @return a process
 	 * @throws IOException
@@ -158,33 +149,34 @@ public class Executable {
 	public static final Process openDocument(File file) throws IOException {
 		return openDocument(file, false);
 	}
-	
+
 	/**
 	 * Prints a PDF document.
+	 * 
 	 * @param fileName
 	 * @param waitForTermination
 	 * @return a process
 	 * @throws IOException
 	 */
-	public static final Process printDocument(String fileName,
-			boolean waitForTermination) throws IOException {
+	public static final Process printDocument(String fileName, boolean waitForTermination) throws IOException {
 		return action(fileName, "/p", waitForTermination);
 	}
 
 	/**
 	 * Prints a PDF document.
+	 * 
 	 * @param file
 	 * @param waitForTermination
 	 * @return a process
 	 * @throws IOException
 	 */
-	public static final Process printDocument(File file,
-			boolean waitForTermination) throws IOException {
+	public static final Process printDocument(File file, boolean waitForTermination) throws IOException {
 		return printDocument(file.getAbsolutePath(), waitForTermination);
 	}
 
 	/**
 	 * Prints a PDF document.
+	 * 
 	 * @param fileName
 	 * @return a process
 	 * @throws IOException
@@ -195,6 +187,7 @@ public class Executable {
 
 	/**
 	 * Prints a PDF document.
+	 * 
 	 * @param file
 	 * @return a process
 	 * @throws IOException
@@ -202,33 +195,34 @@ public class Executable {
 	public static final Process printDocument(File file) throws IOException {
 		return printDocument(file, false);
 	}
-	
+
 	/**
 	 * Prints a PDF document without opening a Dialog box.
+	 * 
 	 * @param fileName
 	 * @param waitForTermination
 	 * @return a process
 	 * @throws IOException
 	 */
-	public static final Process printDocumentSilent(String fileName,
-			boolean waitForTermination) throws IOException {
+	public static final Process printDocumentSilent(String fileName, boolean waitForTermination) throws IOException {
 		return action(fileName, "/p /h", waitForTermination);
 	}
 
 	/**
 	 * Prints a PDF document without opening a Dialog box.
+	 * 
 	 * @param file
 	 * @param waitForTermination
 	 * @return a process
 	 * @throws IOException
 	 */
-	public static final Process printDocumentSilent(File file,
-			boolean waitForTermination) throws IOException {
+	public static final Process printDocumentSilent(File file, boolean waitForTermination) throws IOException {
 		return printDocumentSilent(file.getAbsolutePath(), waitForTermination);
 	}
 
 	/**
 	 * Prints a PDF document without opening a Dialog box.
+	 * 
 	 * @param fileName
 	 * @return a process
 	 * @throws IOException
@@ -239,6 +233,7 @@ public class Executable {
 
 	/**
 	 * Prints a PDF document without opening a Dialog box.
+	 * 
 	 * @param file
 	 * @return a process
 	 * @throws IOException
@@ -246,38 +241,36 @@ public class Executable {
 	public static final Process printDocumentSilent(File file) throws IOException {
 		return printDocumentSilent(file, false);
 	}
-	
+
 	/**
 	 * Launches a browser opening an URL.
-	 *
-	 * @param url the URL you want to open in the browser
+	 * 
+	 * @param url
+	 *            the URL you want to open in the browser
 	 * @throws IOException
 	 */
 	public static final void launchBrowser(String url) throws IOException {
 		try {
 			if (isMac()) {
 				Class macUtils = Class.forName("com.apple.mrj.MRJFileUtils");
-				Method openURL = macUtils.getDeclaredMethod("openURL", new Class[] {String.class});
-				openURL.invoke(null, new Object[] {url});
-			}
-			else if (isWindows())
+				Method openURL = macUtils.getDeclaredMethod("openURL", new Class[] { String.class });
+				openURL.invoke(null, new Object[] { url });
+			} else if (isWindows())
 				Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + url);
-			else { //assume Unix or Linux
-	            String[] browsers = {
-	               "firefox", "opera", "konqueror", "mozilla", "netscape" };
-	            String browser = null;
-	            for (int count = 0; count < browsers.length && browser == null; count++)
-	               if (Runtime.getRuntime().exec(new String[] {"which", browsers[count]}).waitFor() == 0)
-	                  browser = browsers[count];
-	            if (browser == null)
-	               throw new Exception(MessageLocalization.getComposedMessage("could.not.find.web.browser"));
-	            else
-	               Runtime.getRuntime().exec(new String[] {browser, url});
-	            }
-	         }
-	      catch (Exception e) {
-	         throw new IOException(MessageLocalization.getComposedMessage("error.attempting.to.launch.web.browser"));
-	      }
+			else { // assume Unix or Linux
+				String[] browsers = { "firefox", "opera", "konqueror", "mozilla", "netscape" };
+				String browser = null;
+				for (int count = 0; count < browsers.length && browser == null; count++)
+					if (Runtime.getRuntime().exec(new String[] { "which", browsers[count] }).waitFor() == 0)
+						browser = browsers[count];
+				if (browser == null)
+					throw new Exception(MessageLocalization.getComposedMessage("could.not.find.web.browser"));
+				else
+					Runtime.getRuntime().exec(new String[] { browser, url });
+			}
+		} catch (Exception e) {
+			throw new IOException(MessageLocalization.getComposedMessage("error.attempting.to.launch.web.browser"));
+		}
 	}
 
 	/**
