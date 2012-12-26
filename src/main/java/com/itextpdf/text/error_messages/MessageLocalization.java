@@ -48,14 +48,14 @@
  */
 package com.itextpdf.text.error_messages;
 
-import com.itextpdf.text.pdf.BaseFont;
-
 import java.io.BufferedReader;
-import java.io.Reader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.HashMap;
+
+import com.itextpdf.text.pdf.BaseFont;
 
 /**
  * Localizes error messages. The messages are located in the package
@@ -67,7 +67,7 @@ import java.util.HashMap;
 public final class MessageLocalization {
     private static HashMap defaultLanguage = new HashMap();
     private static HashMap currentLanguage;
-    private static final String BASE_PATH = "com/lowagie/text/error_messages/";
+    private static final String BASE_PATH = MessageLocalization.class.getPackage().getName().replace(".", "/");
 
     private MessageLocalization() {
     }
